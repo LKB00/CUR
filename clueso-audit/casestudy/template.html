@@ -1,0 +1,195 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Alex Tries Clueso</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+/* A plain review deck: screenshot on the left with numbered boxes, the issue on the right. One typeface, two signal colours. */
+:root { --bg: #fff; --ink: #141414; --muted: #5f5f5f; --line: #e4e4e4; --issue: #c8341f; --fix: #17803d; --font: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #131313; --ink: #ededed; --muted: #a2a2a2; --line: #2b2b2b; --issue: #ff6a55; --fix: #45c37a; color-scheme: dark; } }
+:root[data-theme="dark"] { --bg: #131313; --ink: #ededed; --muted: #a2a2a2; --line: #2b2b2b; --issue: #ff6a55; --fix: #45c37a; color-scheme: dark; }
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 var(--font); -webkit-font-smoothing: antialiased; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.deck { height: 100%; max-width: 1360px; margin: 0 auto; padding-inline: 40px; display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: 64px minmax(0, 1fr) 72px; }
+header, footer { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+header { border-bottom: 1px solid var(--line); font-size: 14px; }
+header b { font-weight: 600; }
+.count { color: var(--muted); font-variant-numeric: tabular-nums; }
+footer { border-top: 1px solid var(--line); }
+.nav { display: flex; gap: 8px; }
+.nav button { height: 40px; padding: 0 16px; border: 1px solid var(--line); border-radius: 6px; font-size: 14px; font-weight: 500; }
+.nav button:hover:not(:disabled) { border-color: var(--ink); }
+.nav button:disabled { color: var(--muted); opacity: .5; cursor: default; }
+.hint { font-size: 13px; color: var(--muted); }
+.hint kbd { font: inherit; padding: 1px 6px; border: 1px solid var(--line); border-radius: 4px; }
+main { min-height: 0; padding-block: 24px; overflow-y: auto; }
+
+.slide { height: 100%; display: grid; grid-template-columns: minmax(0, 1fr) 400px; gap: 48px; align-items: center; }
+.shot { position: relative; margin: 0; align-self: center; justify-self: center; max-width: 100%; aspect-ratio: var(--ar); width: min(100%, calc((100vh - 64px - 72px - 48px) * var(--ar))); }
+.shot img { display: block; width: 100%; height: 100%; border: 1px solid var(--line); border-radius: 4px; }
+.bx { position: absolute; border: 2px solid var(--c); border-radius: 3px; pointer-events: none; }
+.bx span { position: absolute; left: -2px; top: -22px; min-width: 20px; height: 20px; padding: 0 5px; display: grid; place-items: center; background: var(--c); color: #fff; font-size: 12px; font-weight: 600; border-radius: 3px 3px 3px 0; }
+.issue { --c: var(--issue); } .fix { --c: var(--fix); }
+.text { display: grid; gap: 14px; align-content: center; }
+.label { font-size: 14px; font-weight: 600; color: var(--c); }
+h1, h2 { margin: 0; font-weight: 600; letter-spacing: -0.015em; text-wrap: balance; }
+h2 { font-size: 28px; line-height: 1.15; }
+ol.pts { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+ol.pts li { display: grid; grid-template-columns: 24px 1fr; gap: 12px; align-items: start; }
+ol.pts .n { width: 20px; height: 20px; margin-top: 2px; display: grid; place-items: center; font-size: 12px; font-weight: 600; color: #fff; background: var(--c); border-radius: 3px; }
+ol.pts .n.none { background: none; color: var(--muted); border: 1px solid var(--line); }
+.want { font-size: 14px; color: var(--muted); }
+.want b { color: var(--ink); font-weight: 500; }
+blockquote { margin: 0; padding-left: 16px; border-left: 2px solid var(--c); font-size: 17px; line-height: 1.45; }
+blockquote::before { content: "Alex: "; font-weight: 600; }
+.tally { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.pr, .cost { border-top: 1px solid var(--line); padding-top: 14px; display: grid; gap: 4px; font-size: 15px; }
+.pr small, .cost small { font-size: 13px; color: var(--muted); }
+.pr p, .cost p { margin: 0; color: var(--muted); }
+.pr b, .cost b { font-weight: 600; color: var(--ink); }
+.cost .m { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; }
+.imp { font-size: 13px; font-weight: 600; }
+.imp.High { color: var(--issue); } .imp.Medium { color: var(--ink); } .imp.Low { color: var(--muted); font-weight: 500; }
+.cost .chk { font-size: 13px; }
+
+.page { max-width: 880px; display: grid; gap: 20px; align-content: center; min-height: 100%; }
+.page h1 { font-size: clamp(36px, 5vw, 56px); line-height: 1.05; }
+.page p { margin: 0; color: var(--muted); max-width: 62ch; font-size: 18px; }
+.note p { color: var(--ink); font-size: 17px; }
+.me { display: flex; align-items: center; gap: 20px; }
+.me img { width: 88px; height: 88px; flex: none; border-radius: 50%; object-fit: cover; border: 1px solid var(--line); }
+.me > div { display: grid; gap: 6px; min-width: 0; }
+@media (max-width: 900px) { .me { gap: 14px; } .me img { width: 64px; height: 64px; } }
+.about h1 { font-size: clamp(30px, 3.6vw, 40px); }
+.about .eyebrow { font-size: 14px; font-weight: 600; color: var(--issue); }
+.about ul { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px 28px; }
+.about li span { font-size: 15px; } .about li small:last-child { margin-top: 6px; }
+.about li { display: grid; gap: 2px; align-content: start; padding-top: 12px; border-top: 2px solid var(--line); }
+.about li b { font-weight: 600; } .about li span { color: var(--muted); } .about li small { font-size: 13px; color: var(--muted); }
+.links { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 15px; color: var(--muted); }
+.links a { color: var(--ink); text-underline-offset: 3px; } .note p.sm { color: var(--muted); font-size: 15px; }
+td.num { color: var(--muted); font-weight: 500; width: 28px; font-variant-numeric: tabular-nums; }
+.who { display: grid; grid-template-columns: 96px 1fr; gap: 10px 16px; margin: 0; font-size: 17px; max-width: 640px; }
+.who dt { color: var(--muted); } .who dd { margin: 0; }
+.split { display: flex; flex-wrap: wrap; gap: 32px; font-size: 15px; }
+.split div { display: grid; gap: 2px; } .split b { font-size: 28px; font-weight: 600; } .split .i b { color: var(--issue); }
+.chart svg { width: 100%; height: auto; display: block; }
+.legend { display: flex; flex-wrap: wrap; gap: 24px; font-size: 14px; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 8px; }
+.legend i { width: 20px; height: 0; border-top: 2px solid var(--c); } .legend .b i { border-top-style: dashed; }
+table { width: 100%; border-collapse: collapse; font-size: 15px; }
+th, td { text-align: left; padding: 9px 16px 9px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 13px; font-weight: 500; color: var(--muted); }
+.cheat td:first-child { font-weight: 600; white-space: nowrap; }
+td:last-child { color: var(--muted); font-size: 14px; white-space: nowrap; }
+.sum td:last-child { font-size: 13px; }
+.tw { overflow-x: auto; }
+
+@media (min-width: 901px) and (max-height: 880px) {
+  .slide { grid-template-columns: minmax(0, 1fr) 440px; gap: 40px; }
+  h2 { font-size: 23px; } blockquote { font-size: 15px; } ol.pts { font-size: 14px; gap: 6px; } .text { gap: 10px; }
+  .pr, .cost { font-size: 14px; padding-top: 10px; gap: 2px; } .want, .label { font-size: 13px; }
+  th, td { padding: 6px 16px 6px 0; font-size: 14px; } .page { gap: 16px; } .page h2 { font-size: 26px; }
+}
+@media (max-width: 900px) {
+  .deck { height: auto; min-height: 100%; padding-inline: 16px; grid-template-rows: 56px auto 64px; }
+  main { overflow: visible; padding-block: 24px; }
+  .slide { grid-template-columns: 1fr; gap: 24px; height: auto; }
+  .shot { width: 100%; }
+  h2 { font-size: 24px; }
+  footer { position: sticky; bottom: 0; background: var(--bg); padding-bottom: env(safe-area-inset-bottom, 0px); }
+  .hint { display: none; }
+  .page { min-height: 0; }
+  td:last-child { white-space: normal; }
+}
+</style>
+<div class="deck">
+  <header><b>Alex tries Clueso</b><span class="count" id="count"></span></header>
+  <main id="main" aria-live="polite"></main>
+  <footer><span class="hint">Use <kbd>←</kbd> <kbd>→</kbd> to move</span><div class="nav"><button id="prev">← Previous</button><button id="next">Next →</button></div></footer>
+</div>
+<script>
+/*DATA*/
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const PAGES = [{ kind: "about" }, { kind: "title" }, ...DATA.slides, { kind: "chart" }, { kind: "summary" }, { kind: "cheat" }, { kind: "note" }];
+let i = 0;
+
+function slide(s) {
+  let k = 0;
+  const pts = s.points.map(([t, b]) => { if (b) k++; return { t, n: b ? k : null, b }; });
+  const boxes = pts.filter(p => p.b).map(p => `<div class="bx" style="left:${p.b[0] / s.w * 100}%;top:${p.b[1] / s.h * 100}%;width:${(p.b[2] - p.b[0]) / s.w * 100}%;height:${(p.b[3] - p.b[1]) / s.h * 100}%"><span>${p.n}</span></div>`).join("");
+  const label = `Issue ${s.n} of ${DATA.issues}`;
+  return `<div class="slide ${s.kind}"><figure class="shot" style="--ar:${s.w}/${s.h}"><img src="${s.file}" alt="${s.kind === "issue" ? "Clueso" : "Redesign"}: ${esc(s.title)}" width="${s.w}" height="${s.h}">${boxes}</figure>
+    <div class="text"><span class="label">${label}</span>
+      <span class="want"><b>Alex wants to</b> ${esc(s.want.charAt(0).toLowerCase() + s.want.slice(1))}</span>
+      <h2>${esc(s.title)}</h2>
+      <blockquote>${esc(s.thought)}</blockquote>
+      <ol class="pts">${pts.map(p => `<li><span class="n ${p.n ? "" : "none"}">${p.n || "·"}</span><span>${esc(p.t)}</span></li>`).join("")}</ol>
+      <div class="pr"><small>Why it hurts</small><p><b>${esc(s.principle[0])}.</b> ${esc(s.principle[1])}</p></div>
+      <div class="cost"><small>What it may cost</small><span class="m"><b>${esc(s.metric)}</b><span class="imp ${s.impact}">${s.impact} impact</span></span><p>${esc(s.cost)}</p><p class="chk">How to check: ${esc(s.check)}</p></div></div></div>`;
+}
+function title() {
+  return `<div class="page"><h1>Alex tries Clueso</h1>
+    <p>A new user's path from sign-up to a shared video, and back the next day. Twelve places where it gets harder than it needs to, why each one hurts, and what it may cost in sign-ups, activation, retention and revenue.</p>
+    <dl class="who"><dt>Who</dt><dd>Alex, product manager at Taskly, a small startup</dd><dt>Needs</dt><dd>A 1-minute product demo by Friday</dd><dt>Has</dt><dd>A rough screen recording, no video editor, the Free plan</dd><dt>Expects</dt><dd>Record, get a polished video, share it with the team</dd></dl>
+    <div class="split"><div class="i"><b>${DATA.issues}</b><span>issues</span></div><div class="i"><b>${DATA.summary.filter(r => r[3] === "High").length}</b><span>high impact</span></div><div><b>${DATA.slides[10].screens}</b><span>screens from sign-up to a shared video</span></div></div>
+    <p class="sm" style="font-size:15px">Recorded on web.clueso.io on 16 and 17 October 2026. Every screenshot is from that session.</p></div>`;
+}
+function chart() {
+  const W = 760, H = 300, L = 32, R = 16, T = 16, B = 40; const n = DATA.moments.length;
+  const x = j => L + j * (W - L - R) / (n - 1), y = v => T + (5 - v) * (H - T - B) / 4;
+  const path = a => a.map((v, j) => `${j ? "L" : "M"}${x(j)},${y(v)}`).join(" ");
+  const avg = a => (a.reduce((t, v) => t + v, 0) / a.length).toFixed(1);
+  const grid = [1, 2, 3, 4, 5].map(v => `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${L - 12}" y="${y(v) + 4}" text-anchor="end" font-size="12" fill="var(--muted)">${v}</text>`).join("");
+  const labels = DATA.moments.map((m, j) => `<text x="${x(j)}" y="${H - 12}" text-anchor="${j === 0 ? "start" : j === n - 1 ? "end" : "middle"}" font-size="13" fill="var(--muted)">${esc(m)}</text>`).join("");
+  const dots = (a, c) => a.map((v, j) => `<circle cx="${x(j)}" cy="${y(v)}" r="4" fill="${c}"/>`).join("");
+  return `<div class="page chart"><h2>How Alex felt at each moment</h2><p>1 is fighting the product, 5 is effortless. My reading of the session, not measured data.</p>
+    <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Scores between 1 and 3 across the seven moments, lowest at first value and the next day." font-family="Instrument Sans, system-ui, sans-serif">${grid}
+      <path d="${path(DATA.before)}" fill="none" stroke="var(--issue)" stroke-width="2"/>${dots(DATA.before, "var(--issue)")}${labels}</svg>
+    <div class="legend"><span class="issue"><i></i>Average ${avg(DATA.before)} out of 5</span></div></div>`;
+}
+function summary() {
+  return `<div class="page sum"><h2>All twelve, by what they may cost</h2><div class="tw"><table><thead><tr><th></th><th>Issue</th><th>What it may cost</th><th>Impact</th></tr></thead><tbody>${DATA.summary.map(([n, t, m, imp]) => `<tr><td class="num">${n}</td><td>${esc(t)}</td><td>${esc(m)}</td><td><span class="imp ${imp}">${imp}</span></td></tr>`).join("")}</tbody></table></div></div>`;
+}
+function about() {
+  return `<div class="page about"><div class="me"><img src="img/lokesh.jpg" alt="Lokesh Bhatia" width="88" height="88"><div><span class="eyebrow">Before you start</span>
+    <h1>Hi, I'm Lokesh, a product designer.</h1></div></div>
+    <p>I used Clueso as a new user and wrote down every place it got harder than it needed to. I've worked on the same problems before:</p>
+    <ul>
+      <li><b>Runable AI</b><small>Founding designer</small><span>AI agent platform. Plans shown before a run, long tasks that stay legible, onboarding that reached a ~$1M run-rate in month one.</span><small>Issues 9, 10, 12</small></li>
+      <li><b>Rupeezy</b><small>Product designer</small><span>Owned the trading app behind 97% of revenue. Cut KYC drop-off by putting easy steps first and showing progress.</span><small>Issues 1 to 7</small></li>
+      <li><b>Rise Portal</b><small>Rupeezy</small><span>Partner earnings in one place. Lead-to-client conversion up 2.4× in two months, tickets down 48%.</span><small>Issue 11</small></li>
+    </ul>
+    <div class="links"><a href="https://www.lokeshbhatia.com" target="_blank" rel="noopener">lokeshbhatia.com</a><a href="https://www.linkedin.com/in/lkb01" target="_blank" rel="noopener">linkedin.com/in/lkb01</a><span>hi.lokeshux@gmail.com</span><span>3 years · IIT Guwahati · Bengaluru</span></div></div>`;
+}
+function note() {
+  return `<div class="page note"><h2>How this was made</h2>
+    <p>I signed up on web.clueso.io as a new user, with Google, on the Free plan. I went from sign-up to a shared video, then came back the next day to make a change. Every screenshot is from that session; nothing is mocked up.</p>
+    <p>Alex stands in for the people you onboard every day. The words in quotes are mine, written at each step. Impact levels are my judgement. I don't have your data, so each issue names the number that would confirm or reject it.</p>
+    <p>I'd like to help fix these. I've also built a working prototype of a simpler first-video flow and would be glad to walk you through it.</p>
+    <div class="links"><a href="https://www.lokeshbhatia.com" target="_blank" rel="noopener">lokeshbhatia.com</a><span>hi.lokeshux@gmail.com</span></div></div>`;
+}
+function cheat() {
+  return `<div class="page cheat"><h2>Cheat sheet</h2><div class="tw"><table><thead><tr><th>Principle</th><th>Rule</th><th>Where</th></tr></thead><tbody>${DATA.cheat.map(([n, r, w]) => `<tr><td>${esc(n)}</td><td>${esc(r)}</td><td>${esc(w)}</td></tr>`).join("")}</tbody></table></div></div>`;
+}
+function render() {
+  const p = PAGES[i];
+  document.getElementById("main").innerHTML = p.kind === "about" ? about() : p.kind === "title" ? title() : p.kind === "chart" ? chart() : p.kind === "cheat" ? cheat() : p.kind === "summary" ? summary() : p.kind === "note" ? note() : slide(p);
+  document.getElementById("main").scrollTop = 0;
+  document.getElementById("count").textContent = `${i + 1} / ${PAGES.length}`;
+  document.getElementById("prev").disabled = i === 0;
+  document.getElementById("next").disabled = i === PAGES.length - 1;
+  try { sessionStorage.setItem("clueso-review-slide", String(i)); } catch (e) {}
+}
+const go = d => { const n = Math.max(0, Math.min(PAGES.length - 1, i + d)); if (n !== i) { i = n; render(); if (innerWidth <= 900) scrollTo(0, 0); } };
+document.getElementById("prev").onclick = () => go(-1);
+document.getElementById("next").onclick = () => go(1);
+document.addEventListener("keydown", e => { if (e.metaKey || e.ctrlKey || e.altKey) return; if (e.key === "ArrowRight") { e.preventDefault(); go(1); } else if (e.key === "ArrowLeft") { e.preventDefault(); go(-1); } });
+const h = parseInt((location.hash.match(/^#(\d+)$/) || [])[1], 10);
+if (h >= 1 && h <= PAGES.length) i = h - 1;
+else { try { const saved = parseInt(sessionStorage.getItem("clueso-review-slide"), 10); if (saved >= 0 && saved < PAGES.length) i = saved; } catch (e) {} }
+render();
+</script>

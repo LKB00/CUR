@@ -1,0 +1,345 @@
+{
+ "s1": [
+  [
+   "One question, and it says why it's asked. It replaces Clueso's 4 setup screens (profile, goals, name and role, workspace) and a forced first-video choice.",
+   "B1, B7, B12, O1",
+   "Observed: 5 screens before Home. Research: NN/g onboarding, skip where possible and explain why you ask; Canva asks 1 question (Userpilot)."
+  ],
+  [
+   "The reason is on the screen (\"so we can show you a relevant example\"), and the answer visibly changes the next screen and the Create page.",
+   "O2, O3",
+   "Research: Userpilot, answers must change the experience; NN/g, explain why data is needed."
+  ],
+  [
+   "Continue says why it is disabled (\"Pick one to continue\"), and \"Not sure yet\" is always there.",
+   "B9",
+   "Observed: Clueso's \"Looks good, continue\" was disabled with no reason. Research: Nielsen #5 error prevention and #9 help users recognize problems; WCAG 3.3.2 labels or instructions."
+  ]
+ ],
+ "s2": [
+  [
+   "Show, don't ask: a before-and-after for your answer gives a real sense of the product in one screen, with nothing to build, spend or wait for.",
+   "B13, P1",
+   "Clueso homepage: \"Start with a rough recording... Clueso automatically applies the right workflow\". Research: HAX G1 (make clear what the system can do); NN/g, onboarding is justified for novel features; Google PAIR, set expectations and onboard in stages."
+  ],
+  [
+   "The example shows both outputs, the video and the guide, because that is Clueso's core promise.",
+   "F14, N8",
+   "Clueso homepage: \"Your video is ready. So is your documentation.\" Features listed: AI voiceovers, zooms, captions."
+  ],
+  [
+   "How it works in three lines, in the user's terms, so nothing that happens later is a surprise.",
+   "G5",
+   "Research: Google PAIR mental models; NN/g, don't explain conventional UI, explain the new idea."
+  ]
+ ],
+ "signin": [
+  [
+   "Visible labels tied to inputs; Forgot password moved below the password so Tab goes email → password → Sign in.",
+   "A1, A2",
+   "Observed: inputs had no label, name or autocomplete, and the link sat between them. Research: WCAG 1.3.1 and 2.4.3."
+  ],
+  [
+   "One static customer quote instead of an auto-scrolling wall that included unrelated tiles.",
+   "A3",
+   "Observed: tiles titled \"Meet Claude Cowork\" and \"How to create playlists in Spotify\". Research: Laws of UX, cognitive load."
+  ],
+  [
+   "Terms and privacy stated at sign-up.",
+   "A5",
+   "Observed: no consent line on the form; links exist only on clueso.io."
+  ]
+ ],
+ "w1": [
+  [
+   "3 steps instead of 5 screens. The name comes from Google, so it's never asked.",
+   "B1, B7, O1",
+   "Observed: name asked on two screens after Google sign-in. Research: NN/g, derive data instead of asking; ProductLed, remove unneeded steps."
+  ],
+  [
+   "Visible step count.",
+   "B6",
+   "Observed: \"Step 1 of 4\" existed for screen readers only. Research: Laws of UX, goal-gradient."
+  ],
+  [
+   "The 7 goals are Clueso's own list. Role is optional because it doesn't change anything visible today.",
+   "B8, B9",
+   "Clueso: goals copied from its onboarding. Research: Userpilot, ask only if the answer changes the experience."
+  ],
+  [
+   "No work-email nag; brand comes up once in step 2.",
+   "B4, A4",
+   "Observed: the toast stayed on every step."
+  ],
+  [
+   "The right side is a live preview of your Create page, so you can see each answer change the suggestions and start options. It replaces the decorative \"Make something beautiful\" panel.",
+   "B5, O2",
+   "Observed: the panel took 40% of the screen with no information. Research: Userpilot, answers must visibly change the experience; NN/g, explain why you ask."
+  ]
+ ],
+ "w2": [
+  [
+   "The brand kit is built only from a website you give. Personal domains are never scraped.",
+   "C2, C7, C8",
+   "Observed: the kit was built from gmail.com and applied by default. Clueso: Brand kit has \"Pull again from your website\", so pulling from a URL is an existing capability."
+  ],
+  [
+   "Optional, with the reason stated.",
+   "O3, O4",
+   "Research: NN/g onboarding, customization must explain why and be skippable."
+  ],
+  [
+   "No workspace-naming step; the name defaults and can be changed when inviting.",
+   "B12",
+   "Research: NN/g, the danger of defaults (most users keep them); ProductLed \"yellow light\" step."
+  ]
+ ],
+ "w3": [
+  [
+   "The recommended option is the prompt, which is included on Free and works in the browser.",
+   "B13, B17, P1",
+   "Clueso pricing: \"Create video from chat\" is included on Free. Observed: the recommended Record option demanded an extension install."
+  ],
+  [
+   "At most 2 extra options, filtered by your goals.",
+   "B15, P2",
+   "Research: Hick's law. Competitors: Synthesia and Descript turn the use case into the first creation."
+  ],
+  [
+   "\"What happens next\" sets honest expectations, including about 10 minutes to build. It replaces the false \"playable draft in about two minutes\".",
+   "G5, P10",
+   "Observed: the agent asked questions, sent a storyline to approve, and built a 57-second video in 9 min 37 s. Research: HAX G1 and G2; Google PAIR mental models."
+  ],
+  [
+   "\"Explore a finished sample first\" for people who want to look before they make. Proposal: Clueso has no sample project today.",
+   "O7",
+   "Research: NN/g empty states, offer demo content; Loom's \"get inspired\" fork. Needs validation."
+  ]
+ ],
+ "create": [
+  [
+   "Four ways to start, matching Clueso's own homepage: prompt (main), record, upload, Clueprint. Translate and guides are no longer separate start buttons.",
+   "D13, N8, N10, P2",
+   "Clueso homepage: \"Upload what you already have\", \"Record the screen yourself\", \"Let the agent record for you\", \"Prompt your ideas\". The agent-recorder is Enterprise (pricing), so it sits on the Agent page. Guides come with every video (\"Your video is ready. So is your documentation.\"). Translate needs an existing video, so it lives on the project."
+  ],
+  [
+   "Clueso's full model list stays on every composer (Create, the panel, the Clueso AI page), as one control: the pill shows the vendor mark and model, and the menu groups the nine models by vendor (Anthropic, OpenAI, open models hosted by Baseten) with Clueso's own descriptions. The two models Clueso calls cost-efficient are tagged, and every estimate follows the chosen model. One remembered default everywhere. (An earlier Fast/Best switch removed a real choice and was reverted.)",
+   "C1, C10",
+   "Clueso: \"Director model\" menu lists 9 models with no cost, defaulting to Sonnet 5.5 in chat and Opus 5.5 on Home; the help center says a smaller model costs about half per message; observed 250 credits for a video and 13 for a reply. Research: Nielsen #3 user control; chunking (grouped options); HAX G2 (make clear how well the system can do)."
+  ],
+  [
+   "Brand stays off until you set one.",
+   "C2, G1",
+   "Observed: the brand kit chip was on by default with a made-up kit, and \"Use our brand kit.\" was added to the prompt."
+  ],
+  [
+   "The cost estimate and credits left show before sending.",
+   "B20, E5, A3",
+   "Clueso: its idea picker already shows \"about 150 credits\" per video; a 57-second video used 250. Research: Shape of AI cost estimates."
+  ],
+  [
+   "The suggestion sits inside the empty prompt with a Tab key to accept it, and rotates. That's Clueso's own pattern, with suggestions from your onboarding answer instead of \"Make a video explaining how Facebook works\". It replaces a row of chips. It animates as Clueso's does: each character blurs out and the next suggestion blurs in, letter by letter, and the box glows pink while you type.",
+   "B19, P2",
+   "Clueso: observed placeholder with a Tab hint; measured its promptCharVanish (400 ms, blur 4px, 6px drift) and promptCharMaterialize (450 ms, blur 10px, 20 ms stagger) keyframes and its focused border (pink-50, 0 0 10px 2px glow, 150 ms). Motion is off under reduced-motion. Research: NN/g prompt suggestions should be contextual; cognitive load (no extra row)."
+  ],
+  [
+   "One \"next step\" in place of a 6-item checklist hidden in the sidebar; a head start shows 1 of 4 done.",
+   "C4, O8, P6",
+   "Research: Appcues (3 to 5 items, complete on real events); endowed progress (Nunes and Drèze, 2006)."
+  ],
+  [
+   "One compact usage line (export minutes and credits) links to Plan and usage, replacing a two-meter card and an upgrade ad.",
+   "C5, C6",
+   "Research: Loom and Tango show free limits as one counter (competitor benchmark); cognitive load."
+  ],
+  [
+   "Clueso AI stays in the header on every page.",
+   "C12",
+   "Observed: the button disappeared on Home."
+  ],
+  [
+   "Mode (Ask, Plan, Auto) moves behind Options in the build step instead of sitting on the prompt; no sale banner, survey, What's new card or footer links.",
+   "C3, C6, O9, P14",
+   "Clueso: mode labels from its own menu. Observed: seven attention-seekers on first load. Research: progressive disclosure; ProductLed, no pricing before value."
+  ],
+  [
+   "On the first visit, a one-line \"how it works\" strip and a prompt placeholder built from your onboarding answer. The user starts when they're ready.",
+   "O2, P1",
+   "Research: NN/g, contextual help over front-loaded tutorials; Userpilot, answers change the experience."
+  ],
+  [
+   "Search (⌘K) keeps Clueso's fixed 680 × 480 frame with the input pinned at the top, its scopes and p; n; a; prefixes, and Tab to ask AI. When empty it shows recent projects and quick actions instead of a blank panel. It lists only real matches, highlighted and ranked, with at most 5 per group and \"Show all\". When nothing matches it says so and offers Ask AI or Create. Old names (Chats, MCP, Styles) find their new home.",
+   "N12",
+   "Observed on web.clueso.io: the empty panel is blank; \"xyzq\" still returns 5 projects; \"brand\" returns Home; Navigation is always listed first. Research: Nielsen #6 recognition over recall; NN/g search results (relevance, highlight the query, a useful no-results page); Hick's law; WAI-ARIA combobox pattern for ↑↓ and Enter."
+  ],
+  [
+   "A build keeps its status in the top bar on every page (\"Building · 2 of 6\"), and its finish toast has an Open button that waits 6 s and pauses on hover. Toasts are read out by screen readers; dialogs keep keyboard focus inside and return it when closed.",
+   "A5, G5",
+   "Research: Nielsen #1 visibility of system status; WCAG 2.2.1 timing, 4.1.3 status messages and 2.4.3 focus order; WAI-ARIA dialog pattern."
+  ],
+  [
+   "Clueso AI keeps Clueso's three views, names and icons (Sidebar, Floating, Full screen), and each now works: Sidebar (the default on wide screens) keeps the top bar intact, Floating floats, and Full screen expands in place without leaving the page. The choice is remembered, the header icon shows it, and each option's description is visible instead of hidden in a tooltip. The composer mirrors Clueso's row (+, check-in mode, model) with Quality in place of nine vendor models. The title becomes an editable conversation name, starters sit just above the composer, and the low-credit banner appears only under 150 credits. It names the page or video it is on, offers chips for that page, runs chips a button can do (translate, write the guide, record) directly with no credits, shows credits per reply before sending, attaches context with Clueso's + menu, moves focus to the composer, and Escape closes one layer at a time.",
+   "N14, N15",
+   "Clueso (live, 17 Oct 2026): View mode Sidebar / Floating / Full screen; full screen routes to /home/chat; sidebar hides New project; same 3 chips everywhere; Escape on a menu closes the panel; a reply cost 13 credits. Research: HAX G3, G4; Shape of AI cost estimates; Nielsen #3; WAI-ARIA."
+  ]
+ ],
+ "projects": [
+  [
+   "Language versions and AI spin-offs are grouped under their source.",
+   "N4",
+   "Observed: the Spanish copy and the two PDF spin-offs were loose, unlinked projects."
+  ],
+  [
+   "Rows show only what helps you pick: name, type, guide, a version count, length and when it was edited. The owner and versions columns are dropped for a one-person workspace.",
+   "H7, N3",
+   "Research: cognitive load; NN/g, show information when it supports a decision."
+  ],
+  [
+   "One Filter button replaces seven filters.",
+   "H6, H7",
+   "Observed: the filter bar clipped New folder at 1294 px."
+  ],
+  [
+   "Search filters projects, their language versions and spin-offs as you type, bolds the match, and says so when nothing matches.",
+   "N4, N12",
+   "Observed: the prototype's search box did nothing. Research: NN/g search (highlight the query, a useful no-results page)."
+  ],
+  [
+   "Every Projects ability Clueso has, in fewer controls: sortable Name, Length and Edited headers instead of a sort menu that repeats them; one Filter with removable chips; a row menu (copy link, rename, duplicate, pin, move, delete) that shows on hover and keyboard focus; titles that are real links for opening in a new tab; and a Deleted tab that keeps projects 30 days, with Undo on delete.",
+   "N16",
+   "Clueso (live, 17 Oct 2026): All/Deleted tabs (30 days), 5 filters, 8 sort options, a 9-item row menu shown on hover only, New folder clipped. Research: Jakob's law (sortable headers); Hick's law; NN/g, undo over confirmation; WCAG 2.1.1 keyboard."
+  ]
+ ],
+ "project": [
+  [
+   "One project page with three things beside the video: its guide, its versions (languages and spin-offs together), and a link to its analytics.",
+   "N3, N4",
+   "Research: Dan Brown, objects (one home per object); cognitive load, fewer boxes."
+  ],
+  [
+   "Scene-by-scene progress with an estimate; leave and get notified.",
+   "G5, A5, A10",
+   "Observed: a 9 min 37 s build with only elapsed time. Research: Nielsen \"Slow AI\" three-layer progress; NN/g, waits over 10 s need percent-done."
+  ],
+  [
+   "\"Generate article\" when a video has no article yet.",
+   "F14, N8",
+   "Clueso pricing: \"Generate step-by-step guides/documentation\" is on Free. Observed: articles were blank, behind a Prompt hub."
+  ],
+  [
+   "A breadcrumb shows where you are.",
+   "N2",
+   "Research: Dan Brown, front doors."
+  ],
+  [
+   "When a build finishes, the project page leads with \"Your video is ready\" and Share link, with the export-minute cost in the same line.",
+   "P10, A5",
+   "Research: peak-end rule (the finished video is the peak); Lenny's Newsletter: activation is the first shared link; Nielsen #1 visibility of system status."
+  ]
+ ],
+ "library": [
+  [
+   "Clueprints, clip templates, components, brand kit and media live together.",
+   "D11, I7",
+   "Clueso pricing groups Clip templates, Components and Clueprints under \"Brand Management & Controls\", and the Enterprise card lists \"Branding: Reusable end-to-end video templates, Save and reuse components\"."
+  ],
+  [
+   "Plan locks match pricing: clip templates and components are Business; community Clueprints are free; custom Clueprints are Enterprise.",
+   "E3",
+   "Clueso pricing table."
+  ],
+  [
+   "The Clueprint detail says what you need, and a short brief replaces a paid clarifying chat.",
+   "N5",
+   "Observed: \"Create video\" sent a chat that charged 13 credits to ask for the brief."
+  ]
+ ],
+ "integrations": [
+  [
+   "Things you set up once (extension, MCP, code connections) live in one place at the bottom of the sidebar.",
+   "D10",
+   "Research: Microsoft settings guidance, rarely changed items go last. Clueso: GitHub and Bitbucket \"power your video agents\" (Connections page)."
+  ]
+ ],
+ "settings": [
+  [
+   "One Settings area, grouped like Clueso's own pricing: workspace and admin, billing, content, sharing.",
+   "D14, E10",
+   "Clueso pricing groups: \"Admin & Workspace Control\", \"Sharing & Analytics\". Observed: settings were split across three places."
+  ],
+  [
+   "No domain-joining option for personal email domains.",
+   "E1",
+   "Observed: \"Anyone with a gmail.com email address\" was offered."
+  ],
+  [
+   "Limits match the pricing table; the credit table uses only Clueso's own numbers.",
+   "E3, E4, E6",
+   "Clueso pricing: Free has 1 user, 10 min, 10 articles, 1,000 credits. Observed: Usage showed 1/4 seats."
+  ],
+  [
+   "Invite explains seats and roles per plan.",
+   "N11",
+   "Clueso pricing: Business includes 2 editors plus roles and permissions; reviewer seats are Enterprise."
+  ],
+  [
+   "The only admin can't \"Leave\"; the real options are explained.",
+   "E8",
+   "Observed."
+  ],
+  [
+   "A dark theme built from Clueso's own dark tokens, with Light, Dark and System in the account menu (where Clueso puts it) and in Profile. Clueso's three icons stay, but each gets a visible label and the set works as one radio group with arrow keys.",
+   "N13",
+   "Clueso: measured its .dark tokens (canvas grey-90, surface grey-80, text grey-0, brand text pink-40) and its account-menu icons, which are role=tab buttons with no accessible names. Research: NN/g, icons need text labels; WAI-ARIA radio group; WCAG 1.4.3 contrast in both themes."
+  ]
+ ],
+ "agent": [
+  [
+   "Three jobs, three places. Create starts something new and sends you to the conversation; this page (was Agent) is where conversations live in full, as a list beside the open conversation, where you reply, approve plans and see what got built; the Clueso AI panel only helps with what is on screen while you work elsewhere. The panel and its button never appear on Create or here, as in Clueso, so there is never a second composer.",
+   "N17, D1, D2, N3",
+   "Clueso (live, 17 Oct 2026): one agent behind five doors and four names (Home prompt, Clueso AI, Chats, a full-page chat, Director); the button hides on Home and in chats; Agent is an Enterprise sales page. Research: Nielsen #4 consistency; Dan Brown, objects and front doors; cognitive load (one composer at a time)."
+  ],
+  [
+   "Enterprise automations (record for you, keep videos up to date) are named Automations, not Agent, and are listed once here, where they act.",
+   "D1, N17",
+   "Clueso pricing: \"Clueso Agents for auto-recording and updating videos\" is an Enterprise product, separate from creating a video from chat (Free)."
+  ],
+  [
+   "Included on Free is stated first: create from a brief, and use it from Claude, ChatGPT or Cursor.",
+   "D1, I3",
+   "Clueso pricing: \"Create video from chat\" and \"Clueso MCP\" are included on Free."
+  ],
+  [
+   "Each conversation shows its status and the credits it used.",
+   "N15",
+   "Clueso: chats show a per-message credit count (for example, 13 credits)."
+  ],
+  [
+   "Hierarchy on this page: what needs you is grouped first, and on wide screens it opens on its own, so the main area is never an empty card. Finished conversations carry no coloured badge; only items that need action do. Search sits at the top of the list, as in Clueso's Chats. Plan information moved from a full row under the title to a footnote, and the single New video button is the only way to start.",
+   "N17",
+   "Research: list–detail pattern (Gmail, Slack open the most relevant item); NN/g visual hierarchy, colour signals priority; Nielsen #8 minimalist design (one primary action). Clueso: Chats has a search box."
+  ]
+ ],
+ "analytics": [
+  [
+   "A workspace-wide dashboard across all videos, matching Clueso's help center.",
+   "D7",
+   "Clueso help center (Analytics): project filter, date range, impressions, plays, play rate, impressions vs plays chart, top content table with CSV export, breakdown by location, search analytics."
+  ],
+  [
+   "On Free, a labeled sample of the real dashboard instead of a blank paywall.",
+   "D8",
+   "Clueso pricing: \"Viewership analytics\" is Business and Enterprise."
+  ],
+  [
+   "Pick one video for its retention and drop-off; project pages link here.",
+   "N4",
+   "Clueso help center: audience retention appears when one project is selected."
+  ],
+  [
+   "A lock on the sidebar item, so the paywall isn't a surprise.",
+   "D7, I3",
+   "Research: Dan Brown, disclosure."
+  ]
+ ]
+}

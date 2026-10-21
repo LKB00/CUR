@@ -1,0 +1,369 @@
+<title>Clueso Before and After</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Outfit:wght@400;500&display=swap">
+<style>
+/* Layout: a reading column for the intro, then full-width before/after pairs side by side, stacking below 980px. */
+:root {
+  --bg: oklch(0.985 0.003 330); --surface: #fff; --ink: oklch(0.22 0.01 330); --muted: oklch(0.46 0.01 330); --line: oklch(0.9 0.006 330);
+  --accent: oklch(0.45 0.16 340); --accent-soft: oklch(0.95 0.03 340);
+  --critical: oklch(0.52 0.2 27); --critical-soft: oklch(0.95 0.03 27);
+  --major: oklch(0.55 0.16 50); --major-soft: oklch(0.95 0.04 60);
+  --minor: oklch(0.5 0.1 85); --minor-soft: oklch(0.95 0.05 95);
+  --good: oklch(0.48 0.12 150); --good-soft: oklch(0.95 0.04 150);
+  --display: "Outfit", "Geist", system-ui, sans-serif; --body: "Geist", system-ui, -apple-system, sans-serif; --mono: "Geist Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: oklch(0.17 0.006 330); --surface: oklch(0.21 0.008 330); --ink: oklch(0.94 0.005 330); --muted: oklch(0.72 0.01 330); --line: oklch(0.32 0.01 330);
+  --accent: oklch(0.78 0.12 340); --accent-soft: oklch(0.3 0.06 340);
+  --critical: oklch(0.74 0.15 27); --critical-soft: oklch(0.3 0.06 27); --major: oklch(0.78 0.13 60); --major-soft: oklch(0.3 0.05 60);
+  --minor: oklch(0.82 0.11 95); --minor-soft: oklch(0.3 0.04 95); --good: oklch(0.78 0.12 150); --good-soft: oklch(0.28 0.05 150); color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: oklch(0.17 0.006 330); --surface: oklch(0.21 0.008 330); --ink: oklch(0.94 0.005 330); --muted: oklch(0.72 0.01 330); --line: oklch(0.32 0.01 330);
+  --accent: oklch(0.78 0.12 340); --accent-soft: oklch(0.3 0.06 340);
+  --critical: oklch(0.74 0.15 27); --critical-soft: oklch(0.3 0.06 27); --major: oklch(0.78 0.13 60); --major-soft: oklch(0.3 0.05 60);
+  --minor: oklch(0.82 0.11 95); --minor-soft: oklch(0.3 0.04 95); --good: oklch(0.78 0.12 150); --good-soft: oklch(0.28 0.05 150); color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.55 var(--body); margin: 0; }
+.wrap { max-width: 1320px; margin: 0 auto; padding-inline: 24px; padding-block: 48px 80px; }
+.intro { max-width: 720px; display: grid; gap: 16px; }
+.eyebrow { font: 500 12px var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+h1 { font: 400 clamp(32px, 5vw, 48px)/1.1 var(--display); margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+.lede { font-size: 17px; color: var(--muted); margin: 0; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px 24px; font: 13px var(--mono); color: var(--muted); margin: 0; padding: 0; list-style: none; }
+.facts b { color: var(--ink); font-weight: 500; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 13px; color: var(--muted); align-items: center; }
+.legend span { display: inline-flex; gap: 6px; align-items: center; }
+.howto { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; display: grid; gap: 10px; font-size: 14px; }
+.howto p { margin: 0; }
+nav.toc { margin-top: 32px; border-top: 1px solid var(--line); padding-top: 20px; }
+nav.toc ol { list-style: none; padding: 0; margin: 0; columns: 3 220px; column-gap: 24px; font-size: 14px; }
+nav.toc li { break-inside: avoid; padding: 2px 0; }
+nav.toc .tstage { font: 500 11px var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); padding-top: 10px; }
+nav.toc .tstage:first-child { padding-top: 0; }
+a { color: var(--accent); text-underline-offset: 2px; }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+.pair { margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--line); scroll-margin-top: 16px; }
+.phead { display: flex; gap: 16px; align-items: flex-start; max-width: 900px; }
+.pnum { font: 500 13px var(--mono); color: var(--muted); padding-top: 6px; font-variant-numeric: tabular-nums; }
+.stage { font: 500 11px var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--accent); }
+h2 { font: 400 26px/1.2 var(--display); margin: 2px 0 6px; text-wrap: balance; }
+.gist { margin: 0; color: var(--muted); max-width: 68ch; }
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 24px; }
+.col { min-width: 0; display: grid; gap: 14px; align-content: start; }
+.label { font: 500 12px var(--mono); text-transform: uppercase; letter-spacing: .06em; display: flex; gap: 8px; align-items: center; }
+.dot { width: 8px; height: 8px; border-radius: 50%; } .dot.bad { background: var(--major); } .dot.ok { background: var(--good); }
+.shot { display: block; border-radius: 8px; overflow: hidden; border: 1px solid var(--line); background: var(--surface); }
+.shot img { display: block; width: 100%; height: auto; }
+.shot:hover { border-color: var(--muted); }
+.items { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.items li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: start; }
+.items b { font-weight: 500; }
+.items p { margin: 3px 0 0; font-size: 14px; color: var(--muted); }
+.chip { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font: 600 11px var(--body); color: #fff; margin-top: 1px; font-variant-numeric: tabular-nums; }
+.chip.critical { background: oklch(0.55 0.21 27); } .chip.major { background: oklch(0.6 0.17 50); } .chip.minor { background: oklch(0.6 0.12 85); } .chip.good { background: oklch(0.52 0.13 150); }
+.sev { font: 500 10px var(--mono); text-transform: uppercase; letter-spacing: .05em; padding: 1px 6px; border-radius: 999px; margin-left: 4px; white-space: nowrap; }
+.sev.critical { color: var(--critical); background: var(--critical-soft); } .sev.major { color: var(--major); background: var(--major-soft); } .sev.minor { color: var(--minor); background: var(--minor-soft); } .sev.good { color: var(--good); background: var(--good-soft); }
+.basis { color: var(--ink) !important; }
+.basis span { font: 500 10px var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-right: 8px; }
+.also { border-left: 2px solid var(--line); padding-left: 12px; font-size: 14px; color: var(--muted); display: grid; gap: 6px; }
+.also > span { font: 500 10px var(--mono); text-transform: uppercase; letter-spacing: .06em; }
+.also p { margin: 0; } .also b { color: var(--ink); font-weight: 500; }
+.basis-inline { color: var(--ink); }
+.principles { margin-top: 72px; padding-top: 32px; border-top: 1px solid var(--line); max-width: 860px; }
+.principles dl { display: grid; grid-template-columns: minmax(180px, 260px) 1fr; gap: 12px 24px; margin: 20px 0 0; }
+.principles dt { font-weight: 500; } .principles dd { margin: 0; color: var(--muted); font-size: 14px; }
+.foot { margin-top: 48px; font-size: 13px; color: var(--muted); max-width: 760px; }
+@media (max-width: 980px) { .cols { grid-template-columns: 1fr; gap: 28px; } }
+@media (max-width: 640px) { .wrap { padding-inline: 16px; padding-block: 32px 56px; } .principles dl { grid-template-columns: 1fr; gap: 4px; } .principles dd { margin-bottom: 10px; } .phead { gap: 10px; } h2 { font-size: 22px; } }
+</style>
+<div class="wrap">
+  <header class="intro">
+    <span class="eyebrow">UX audit · web.clueso.io · October 2026</span>
+    <h1>Clueso, before and after</h1>
+    <p class="lede">Each section puts a screen from Clueso's live app next to the redesign prototype. On the left, what's wrong, highlighted, and the principle it breaks. On the right, what changed and why.</p>
+    <ul class="facts"><li><b>18</b> screens</li><li><b>38</b> issues</li><li><b>54</b> design decisions</li><li>Free plan, observed 15–17 Oct 2026</li></ul>
+    <div class="howto">
+      <p><b>How to read it.</b> Numbers on a screenshot match the numbered notes under it. Click any screenshot to open it full size.</p>
+      <div class="legend"><span><span class="chip critical">1</span>Critical</span><span><span class="chip major">1</span>Major</span><span><span class="chip minor">1</span>Minor</span><span><span class="chip good">1</span>Redesign decision</span></div>
+      <p><b>Basis</b> names the principle, law or research behind an issue. <b>Why</b> names what a decision rests on: Clueso's own pricing, help center or app ("Clueso"), something observed during the audit, or cited research. Nothing is assumed.</p>
+    </div>
+  </header>
+  <nav class="toc" aria-label="Screens"><ol><li class="tstage">Sign in</li><li><a href="#signin">Sign-in page</a></li><li class="tstage">Onboarding</li><li><a href="#questions">Setup questions</a></li><li><a href="#firstvalue">The end of onboarding</a></li><li class="tstage">Home</li><li><a href="#create">Home</a></li><li><a href="#build">Before the build</a></li><li class="tstage">Project</li><li><a href="#progress">While it builds</a></li><li class="tstage">Projects</li><li><a href="#projects">Projects list</a></li><li class="tstage">Clueso AI</li><li><a href="#agent">Agent and Chats</a></li><li class="tstage">Analytics</li><li><a href="#analytics">Analytics</a></li><li class="tstage">Clueprints</li><li><a href="#library">Clueprints</a></li><li class="tstage">Integrations</li><li><a href="#integrations">MCP and connections</a></li><li class="tstage">Settings</li><li><a href="#plan">Plan, usage and credits</a></li><li class="tstage">Share</li><li><a href="#share">Sharing a video</a></li><li class="tstage">Team</li><li><a href="#invite">Inviting a teammate</a></li><li class="tstage">Translate</li><li><a href="#translate">Translating a video</a></li><li class="tstage">Search</li><li><a href="#search">Search results</a></li><li><a href="#search-empty">Search before you type</a></li><li class="tstage">Navigation</li><li><a href="#sidebar">Collapsed sidebar</a></li></ol></nav>
+  <section class="pair" id="signin">
+  <header class="phead"><span class="pnum">01</span><div><span class="stage">Sign in</span><h2>Sign-in page</h2><p class="gist">The form works, but keyboard order and an auto-scrolling wall get in the way of a 10-second task.</p></div></header>
+  <div class="cols">
+    <div class="col before">
+      <div class="label"><span class="dot bad"></span>Clueso today</div>
+      <a class="shot" href="img/before-01-login.jpg" target="_blank" rel="noopener"><img src="img/before-01-login.jpg" alt="Clueso: Sign-in page, issues highlighted" loading="lazy"></a>
+      <ol class="items"><li><span class="chip minor">1</span><div><b>Forgot password link interrupts the keyboard path</b> <span class="sev minor">Minor</span><p>The link sits between the Password label and its field, so Tab goes email, Forgot password, password. Neither input has a label element, a name or an autocomplete value, so screen readers announce only the placeholder and password managers have less to go on.</p><p class="basis"><span>Basis</span>Accessibility, error prevention</p></div></li><li><span class="chip minor">3</span><div><b>Auto-scrolling wall competes with the task</b> <span class="sev minor">Minor</span><p>The right half scrolls testimonials and showcase videos, including tiles titled &quot;Meet Claude Cowork&quot; and &quot;How to create playlists in Spotify&quot;, which read as other companies&#x27; products. Every quote is duplicated in the markup, so assistive tech reads it twice. Errors rely only on the browser&#x27;s native bubbles.</p><p class="basis"><span>Basis</span>Aesthetic and minimalist design</p></div></li></ol>
+    </div>
+    <div class="col after">
+      <div class="label"><span class="dot ok"></span>Redesign</div>
+      <a class="shot" href="img/after-signin.jpg" target="_blank" rel="noopener"><img src="img/after-signin.jpg" alt="Redesign: Sign-in page, decisions highlighted" loading="lazy"></a>
+      <ol class="items"><li><span class="chip good">1</span><div><b>Visible labels tied to each input, and Forgot password moved below the field, so Tab goes email → password → Sign in.</b><p class="basis"><span>Why</span>WCAG 1.3.1 (info and relationships) and 2.4.3 (focus order).</p></div></li><li><span class="chip good">2</span><div><b>One static customer quote replaces the moving wall of testimonials and unrelated showcase tiles.</b><p class="basis"><span>Why</span>Cognitive load (Laws of UX): motion beside a form competes for attention while the user is typing.</p></div></li><li><span class="chip good">3</span><div><b>A one-line terms and privacy notice under the button.</b><p class="basis"><span>Why</span>Nielsen #10, help and documentation: consent is stated where it happens.</p></div></li></ol>
+    </div>
+  </div>
+</section>
+<section class="pair" id="questions">
+  <header class="phead"><span class="pnum">02</span><div><span class="stage">Onboarding</span><h2>Setup questions</h2><p class="gist">Clueso asks for a name Google already gave, then role and workspace, across 4 screens before Home.</p></div></header>
+  <div class="cols">
+    <div class="col before">
+      <div class="label"><span class="dot bad"></span>Clueso today</div>
+      <a class="shot" href="img/before-09-onb-profile.jpg" target="_blank" rel="noopener"><img src="img/before-09-onb-profile.jpg" alt="Clueso: Setup questions, issues highlighted" loading="lazy"></a>
+      <ol class="items"><li><span class="chip major">1</span><div><b>Second request for the user&#x27;s name in under a minute</b> <span class="sev major">Major</span><p>First and last name again, prefilled this time from the previous screen.</p><p class="basis"><span>Basis</span>Consistency</p></div></li><li><span class="chip minor">2</span><div><b>Role list is long and unordered</b> <span class="sev minor">Minor</span><p>13 roles in no clear order, with mixed naming (&quot;Customer education &amp; training&quot; next to &quot;Learning and development&quot;, plus jargon like &quot;CXO&quot;).</p><p class="basis"><span>Basis</span>Match with the real world</p></div></li><li><span class="chip minor">3</span><div><b>&quot;Looks good, continue&quot; is disabled with no reason given</b> <span class="sev minor">Minor</span><p>The button reads as ready but does nothing until a role is picked.</p><p class="basis"><span>Basis</span>Error prevention</p></div></li></ol>
+    </div>
+    <div class="col after">
+      <div class="label"><span class="dot ok"></span>Redesign</div>
+      <a class="shot" href="img/after-start1.jpg" target="_blank" rel="noopener"><img src="img/after-start1.jpg" alt="Redesign: Setup questions, decisions highlighted" loading="lazy"></a>
+      <ol class="items"><li><span class="chip good">1</span><div><b>One screen, one question, and the reason is written under it: &quot;so we can show you a relevant example and set up your Home page&quot;.</b><p class="basis"><span>Why</span>NN/g onboarding: skip what you can and explain why you ask. Canva asks one question (Userpilot).</p></div></li><li><span class="chip good">2</span><div><b>Four jobs in Clueso&#x27;s own terms. The answer changes the next screen and the Home page, so answering visibly pays off.</b><p class="basis"><span>Why</span>Userpilot welcome surveys: ask only what changes the experience. Hick&#x27;s law: 4 options instead of 13 roles.</p></div></li><li><span class="chip good">3</span><div><b>&quot;Not sure yet&quot; and Skip are always there. Name, role and workspace are never asked; the name comes from Google.</b><p class="basis"><span>Why</span>Nielsen #3, user control and freedom. NN/g forms: derive data instead of asking for it.</p></div></li></ol>
+    </div>
+  </div>
+</section>
+<section class="pair" id="firstvalue">
+  <header class="phead"><span class="pnum">03</span><div><span class="stage">Onboarding</span><h2>The end of onboarding</h2><p class="gist">The recommended option ends in an install wall, at the moment motivation is highest.</p></div></header>
+  <div class="cols">
+    <div class="col before">
+      <div class="label"><span class="dot bad"></span>Clueso today</div>
+      <a class="shot" href="img/before-15-onb-extension-gate.jpg" target="_blank" rel="noopener"><img src="img/before-15-onb-extension-gate.jpg" alt="Clueso: The end of onboarding, issues highlighted" loading="lazy"></a>
+      <ol class="items"><li><span class="chip critical">1</span><div><b>Install wall at the moment of first value</b> <span class="sev critical">Critical</span><p>&quot;Install the free Clueso extension... then come back here&quot; breaks the session at the riskiest point of activation.</p><p class="basis"><span>Basis</span>Time to value</p></div></li></ol><div class="also"><span>Also seen</span><p><b>The recommended path is a dead end inside the product.</b> &quot;Record screen, RECOMMENDED FOR YOU&quot; opens an install modal (next figure) that sends the user to the Chrome Web Store at the final onboarding step. <span class="basis-inline">Basis: Time to value</span></p><p><b>Six choices, two of them irrelevant to a new user.</b> &quot;Translate an existing video&quot; needs a video the user doesn&#x27;t have yet. &quot;Create from Claude, ChatGPT, or Gemini&quot; is a developer integration. <span class="basis-inline">Basis: Hick&#x27;s law</span></p></div>
+    </div>
+    <div class="col after">
+      <div class="label"><span class="dot ok"></span>Redesign</div>
+      <a class="shot" href="img/after-start2.jpg" target="_blank" rel="noopener"><img src="img/after-start2.jpg" alt="Redesign: The end of onboarding, decisions highlighted" loading="lazy"></a>
+      <ol class="items"><li><span class="chip good">1</span><div><b>Show, don&#x27;t ask: the last onboarding screen shows what Clueso does for the job you picked. Nothing is built, spent, installed or waited for.</b><p class="basis"><span>Why</span>Fogg behavior model (B = MAP): keep ability high while motivation peaks. HAX G1: make clear what the system can do.</p></div></li><li><span class="chip good">2</span><div><b>A before-and-after of a rough recording becoming a polished video, plus the written guide, because that pair is Clueso&#x27;s core promise.</b><p class="basis"><span>Why</span>Clueso homepage: &quot;Your video is ready. So is your documentation.&quot;</p></div></li><li><span class="chip good">3</span><div><b>How it works in three plain steps, so nothing later is a surprise. Then &quot;Start creating&quot; goes to a Home page already set up for that job.</b><p class="basis"><span>Why</span>Google PAIR, mental models: set expectations early. Downhill onboarding: every step should be easier than the last.</p></div></li></ol>
+    </div>
+  </div>
+</section>
+<section class="pair" id="create">
+  <header class="phead"><span class="pnum">04</span><div><span class="stage">Home</span><h2>Home</h2><p class="gist">Seven things compete for attention on the first view, and the prompt carries controls a new user can&#x27;t judge.</p></div></header>
+  <div class="cols">
+    <div class="col before">
+      <div class="label"><span class="dot bad"></span>Clueso today</div>
+      <a class="shot" href="img/before-18-home-checklist-survey.jpg" target="_blank" rel="noopener"><img src="img/before-18-home-checklist-survey.jpg" alt="Clueso: Home, issues highlighted" loading="lazy"></a>
+      <ol class="items"><li><span class="chip major">1</span><div><b>A model picker for people making videos</b> <span class="sev major">Major</span><p>The default is Opus 5.5. The menu (next figure but one) lists six LLMs with vendor taglines and no cost, speed or quality guidance.</p><p class="basis"><span>Basis</span>Match with the real world</p></div></li><li><span class="chip critical">2</span><div><b>Brand kit is on by default, and it is made up</b> <span class="sev critical">Critical</span><p>The brand kit chip is on by default. For a gmail.com sign-up, the kit was built from gmail.com: a placeholder pink logo and a pink accent (next figure). The AI added &quot;Use our brand kit.&quot; to my prompt and planned the video in &quot;brand pink (#D43F8C)&quot;.</p><p class="basis"><span>Basis</span>Error prevention</p></div></li><li><span class="chip major">3</span><div><b>Survey interrupts the first session</b> <span class="sev major">Major</span><p>&quot;How did you hear about us?&quot; pops up within seconds and covers the Translate button.</p><p class="basis"><span>Basis</span>User control and freedom</p></div></li><li><span class="chip major">4</span><div><b>Get-started checklist is hidden and loosely defined</b> <span class="sev major">Major</span><p>It sits collapsed near the bottom of the sidebar under a promo card. Install screen recorder comes after Export a video. Make your first video was ticked by a blank 6-second project.</p><p class="basis"><span>Basis</span>Visibility of system status</p></div></li><li><span class="chip major">5</span><div><b>One plan, three names</b> <span class="sev major">Major</span><p>The sidebar says &quot;Free trial&quot;, the upgrade card says &quot;You are on the free plan&quot;, and Billing says &quot;Free&quot;. A trial implies an end date; this plan has none.</p><p class="basis"><span>Basis</span>Consistency</p></div></li><li><span class="chip minor">6</span><div><b>Seven things asking for attention</b> <span class="sev minor">Minor</span><p>Series A sale banner, What&#x27;s new card, checklist, upgrade card, survey, work-email toast and a floating chat bubble, all on the first view.</p><p class="basis"><span>Basis</span>Aesthetic and minimalist design</p></div></li></ol>
+    </div>
+    <div class="col after">
+      <div class="label"><span class="dot ok"></span>Redesign</div>
+      <a class="shot" href="img/after-create.jpg" target="_blank" rel="noopener"><img src="img/after-create.jpg" alt="Redesign: Home, decisions highlighted" loading="lazy"></a>
+      <ol class="items"><li><span class="chip good">1</span><div><b>A suggestion sits in the empty prompt with a Tab key to accept it, built from the onboarding answer. It uses Clueso&#x27;s own pattern and animation.</b><p class="basis"><span>Why</span>Recognition over recall (Nielsen #6). Clueso&#x27;s own RotatingPlaceholder, measured in the live app.</p></div></li><li><span class="chip good">2</span><div><b>Clueso&#x27;s nine models stay, grouped by vendor, and the pill shows the one in use. Every estimate follows the chosen model.</b><p class="basis"><span>Why</span>User control and freedom (Nielsen #3). Clueso&#x27;s help center: a smaller model costs about half per message.</p></div></li><li><span class="chip good">3</span><div><b>Brand stays off until you set one up, so the AI never invents a brand kit from gmail.com.</b><p class="basis"><span>Why</span>Error prevention (Nielsen #5).</p></div></li><li><span class="chip good">4</span><div><b>Credits left, and the estimate once you type, sit next to Send.</b><p class="basis"><span>Why</span>HAX G4 and Shape of AI cost estimates: show the cost before the action.</p></div></li><li><span class="chip good">5</span><div><b>Clueso&#x27;s own start options, each with one line on what it does: record, upload videos or slides, translate.</b><p class="basis"><span>Why</span>Clueso Home&#x27;s &quot;Or start directly&quot;. Hick&#x27;s law for merging its two upload buttons into one.</p></div></li><li><span class="chip good">6</span><div><b>One next step with progress, replacing a 6-item checklist hidden under a promo card.</b><p class="basis"><span>Why</span>Goal-gradient effect and endowed progress (Nunes and Drèze, 2006): showing 1 of 4 done raises completion.</p></div></li><li><span class="chip good">7</span><div><b>One compact usage line instead of a two-meter card and an upgrade ad. No sale banner, survey or chat bubble. What&#x27;s new moves into Help, which stays in the top bar where Clueso has it.</b><p class="basis"><span>Why</span>Aesthetic and minimalist design (Nielsen #8). ProductLed: no pricing before value.</p></div></li></ol>
+    </div>
+  </div>
+</section>
+<section class="pair" id="build">
+  <header class="phead"><span class="pnum">05</span><div><span class="stage">Home</span><h2>Before the build</h2><p class="gist">The default model is the most expensive one, and nothing says what the video will cost.</p></div></header>
+  <div class="cols">
+    <div class="col before">
+      <div class="label"><span class="dot bad"></span>Clueso today</div>
+      <a class="shot" href="img/before-46-model-picker.jpg" target="_blank" rel="noopener"><img src="img/before-46-model-picker.jpg" alt="Clueso: Before the build, issues highlighted" loading="lazy"></a>
+      <ol class="items"><li><span class="chip major">1</span><div><b>The most expensive model is the default, and the menu shows no costs</b> <span class="sev major">Major</span><p>Opus 5.5, Sonnet 5.5, Astra 6, Sol 6.1, Luna 6 and Terra 5.6, each described by vendor (&quot;Anthropic&#x27;s most capable model&quot;). The help docs say a smaller model costs about half per message, but this menu doesn&#x27;t say so.</p><p class="basis"><span>Basis</span>Match with the real world</p></div></li></ol><div class="also"><span>Also seen</span><p><b>&quot;Use our brand kit.&quot; was added to my prompt.</b> My message gained a line I didn&#x27;t write, which applied the gmail.com brand kit. <span class="basis-inline">Basis: User control and freedom</span></p></div>
+    </div>
+    <div class="col after">
+      <div class="label"><span class="dot ok"></span>Redesign</div>
+      <a class="shot" href="img/after-build.jpg" target="_blank" rel="noopener"><img src="img/after-build.jpg" alt="Redesign: Before the build, decisions highlighted" loading="lazy"></a>
+      <ol class="items"><li><span class="chip good">1</span><div><b>Sending opens the conversation with a plan card: the cost range, credits left, about how long it takes, and that a guide is included.</b><p class="basis"><span>Why</span>Shape of AI: cost estimates. Clueso&#x27;s own idea picker shows &quot;about 150 credits&quot;; a 57-second video used 250.</p></div></li><li><span class="chip good">2</span><div><b>Model, how often to check in, and brand sit in the card, using Clueso&#x27;s own names. The brief is shown exactly as typed; nothing is added to it.</b><p class="basis"><span>Why</span>Progressive disclosure (NN/g). User control and freedom (Nielsen #3).</p></div></li><li><span class="chip good">3</span><div><b>Nothing is built or charged until you press Build video. Change brief takes it back to Home.</b><p class="basis"><span>Why</span>Error prevention (Nielsen #5): a costly action needs an explicit go.</p></div></li></ol>
+    </div>
+  </div>
+</section>
+<section class="pair" id="progress">
+  <header class="phead"><span class="pnum">06</span><div><span class="stage">Project</span><h2>While it builds</h2><p class="gist">A 9 min 37 s build showed only elapsed time and raw agent logs.</p></div></header>
+  <div class="cols">
+    <div class="col before">
+      <div class="label"><span class="dot bad"></span>Clueso today</div>
+      <a class="shot" href="img/before-63-ai-video-building.jpg" target="_blank" rel="noopener"><img src="img/before-63-ai-video-building.jpg" alt="Clueso: While it builds, issues highlighted" loading="lazy"></a>
+      <ol class="items"><li><span class="chip major">1</span><div><b>No estimate and no end in sight</b> <span class="sev major">Major</span><p>&quot;Working for 4m 54s&quot;, then &quot;Thinking for 8m 14s&quot; when I stopped watching. There was no estimate and no per-scene progress.</p><p class="basis"><span>Basis</span>Visibility of system status</p></div></li></ol>
+    </div>
+    <div class="col after">
+      <div class="label"><span class="dot ok"></span>Redesign</div>
+      <a class="shot" href="img/after-project.jpg" target="_blank" rel="noopener"><img src="img/after-project.jpg" alt="Redesign: While it builds, decisions highlighted" loading="lazy"></a>
+      <ol class="items"><li><span class="chip good">1</span><div><b>Scene-by-scene progress with time left and &quot;you can leave; we&#x27;ll notify you&quot;.</b><p class="basis"><span>Why</span>Nielsen&#x27;s &quot;Slow AI&quot;: show progress, stage and estimate. NN/g response times: waits over 10 s need percent done.</p></div></li><li><span class="chip good">2</span><div><b>A breadcrumb shows where this project lives.</b><p class="basis"><span>Why</span>Dan Brown, principle of front doors: people arrive deep and need to know where they are.</p></div></li><li><span class="chip good">3</span><div><b>The project page leads with the video, then three things only: its guide, its versions and its analytics.</b><p class="basis"><span>Why</span>Peak-end rule: the finished video is the peak, so it gets the stage. Dan Brown, objects: one home per object.</p></div></li></ol>
+    </div>
+  </div>
+</section>
+<section class="pair" id="projects">
+  <header class="phead"><span class="pnum">07</span><div><span class="stage">Projects</span><h2>Projects list</h2><p class="gist">Seven filters for two projects push New folder off screen, and copies made from a video float loose.</p></div></header>
+  <div class="cols">
+    <div class="col before">
+      <div class="label"><span class="dot bad"></span>Clueso today</div>
+      <a class="shot" href="img/before-65-projects-list.jpg" target="_blank" rel="noopener"><img src="img/before-65-projects-list.jpg" alt="Clueso: Projects list, issues highlighted" loading="lazy"></a>
+      <ol class="items"><li><span class="chip major">1</span><div><b>The filter bar pushes the New folder button off screen</b> <span class="sev major">Major</span><p>At 1294 px wide, the button is clipped to its icon.</p><p class="basis"><span>Basis</span>Layout</p></div></li><li><span class="chip minor">2</span><div><b>Seven filters for two projects</b> <span class="sev minor">Minor</span><p></p><p class="basis"><span>Basis</span>Minimalism</p></div></li><li><span class="chip minor">3</span><div><b>Blank thumbnails</b> <span class="sev minor">Minor</span><p>Command search shows thumbnails for the same projects, but this list doesn&#x27;t.</p><p class="basis"><span>Basis</span>Recognition</p></div></li></ol><div class="also"><span>Also seen</span><p><b>Language versions and AI spin-offs are loose projects.</b> The Spanish copy (&quot;Taskly – Seguimiento de T...&quot;) sits as an unrelated project with no language badge. The two videos generated from the PDF are separate projects with new names. <span class="basis-inline">Basis: Brown: multiple classification</span></p></div>
+    </div>
+    <div class="col after">
+      <div class="label"><span class="dot ok"></span>Redesign</div>
+      <a class="shot" href="img/after-projects.jpg" target="_blank" rel="noopener"><img src="img/after-projects.jpg" alt="Redesign: Projects list, decisions highlighted" loading="lazy"></a>
+      <ol class="items"><li><span class="chip good">1</span><div><b>One Filter button replaces seven filters, so New folder always fits.</b><p class="basis"><span>Why</span>Hick&#x27;s law and progressive disclosure: filters appear when there is something to filter.</p></div></li><li><span class="chip good">2</span><div><b>Language versions and AI spin-offs sit under the video they came from, with badges. Columns show only what helps you pick.</b><p class="basis"><span>Why</span>Dan Brown, multiple classification and objects. Cognitive load: show information when it supports a decision.</p></div></li></ol>
+    </div>
+  </div>
+</section>
+<section class="pair" id="agent">
+  <header class="phead"><span class="pnum">08</span><div><span class="stage">Clueso AI</span><h2>Agent and Chats</h2><p class="gist">On Free, a primary nav item opens a sales page whose only action is Book a demo, while the real assistant sits under Chats.</p></div></header>
+  <div class="cols">
+    <div class="col before">
+      <div class="label"><span class="dot bad"></span>Clueso today</div>
+      <a class="shot" href="img/before-20-agent-upsell.jpg" target="_blank" rel="noopener"><img src="img/before-20-agent-upsell.jpg" alt="Clueso: Agent and Chats, issues highlighted" loading="lazy"></a>
+      <ol class="items"><li><span class="chip major">1</span><div><b>A primary nav slot spent on a sales page</b> <span class="sev major">Major</span><p>Agent opens a marketing page whose main action is Book a demo. The feature is Enterprise-only, but free users see it as the third item in the nav.</p><p class="basis"><span>Basis</span>Match between the system and user goals</p></div></li><li><span class="chip major">2</span><div><b>Agent, Chats and Clueso AI blur together</b> <span class="sev major">Major</span><p>The checklist asks the user to &quot;Chat with the AI agent&quot;, which actually means Chats, not Agent.</p><p class="basis"><span>Basis</span>Consistency</p></div></li></ol>
+    </div>
+    <div class="col after">
+      <div class="label"><span class="dot ok"></span>Redesign</div>
+      <a class="shot" href="img/after-agent.jpg" target="_blank" rel="noopener"><img src="img/after-agent.jpg" alt="Redesign: Agent and Chats, decisions highlighted" loading="lazy"></a>
+      <ol class="items"><li><span class="chip good">1</span><div><b>Agent and Chats become one item, Clueso AI: one name for the one assistant.</b><p class="basis"><span>Why</span>Consistency (Nielsen #4). Clueso shows the same assistant as Agent, Chats, Clueso AI and Director.</p></div></li><li><span class="chip good">2</span><div><b>The page lists your conversations, with what needs you first, each with its status and the credits it used.</b><p class="basis"><span>Why</span>List and detail pattern (Gmail, Slack). NN/g: colour signals priority. Clueso chats already show per-message credits.</p></div></li><li><span class="chip good">3</span><div><b>What Free includes is stated once, and Enterprise agents are called Automations, listed once.</b><p class="basis"><span>Why</span>Clueso pricing: creating a video from chat and MCP are on Free; agents for auto-recording are Enterprise.</p></div></li><li><span class="chip good">4</span><div><b>Reply in place, with the model and the cost per reply shown before you send.</b><p class="basis"><span>Why</span>Shape of AI cost estimates. Observed: 13 credits for one reply.</p></div></li></ol>
+    </div>
+  </div>
+</section>
+<section class="pair" id="analytics">
+  <header class="phead"><span class="pnum">09</span><div><span class="stage">Analytics</span><h2>Analytics</h2><p class="gist">Analytics is a locked page with no preview of what you&#x27;d get.</p></div></header>
+  <div class="cols">
+    <div class="col before">
+      <div class="label"><span class="dot bad"></span>Clueso today</div>
+      <a class="shot" href="img/before-25-analytics-locked.jpg" target="_blank" rel="noopener"><img src="img/before-25-analytics-locked.jpg" alt="Clueso: Analytics, issues highlighted" loading="lazy"></a>
+      <ol class="items"><li><span class="chip major">1</span><div><b>Primary nav item is a locked page</b> <span class="sev major">Major</span><p>Analytics is Business and Enterprise only. The Video player settings page behaves the same way.</p><p class="basis"><span>Basis</span>Visibility of system status</p></div></li><li><span class="chip minor">2</span><div><b>The upsell doesn&#x27;t show what the user would get</b> <span class="sev minor">Minor</span><p>There is no preview of the dashboard.</p><p class="basis"><span>Basis</span>Recognition</p></div></li></ol>
+    </div>
+    <div class="col after">
+      <div class="label"><span class="dot ok"></span>Redesign</div>
+      <a class="shot" href="img/after-analytics.jpg" target="_blank" rel="noopener"><img src="img/after-analytics.jpg" alt="Redesign: Analytics, decisions highlighted" loading="lazy"></a>
+      <ol class="items"><li><span class="chip good">1</span><div><b>On Free, a clearly labeled sample of the real dashboard, with one &quot;See plans&quot; button.</b><p class="basis"><span>Why</span>Show value before asking for it. Clueso pricing: viewership analytics is Business and Enterprise.</p></div></li><li><span class="chip good">2</span><div><b>One workspace-wide dashboard across all videos, built from Clueso&#x27;s help center description.</b><p class="basis"><span>Why</span>Clueso help center (Analytics): filters, impressions, plays, play rate, top content, locations.</p></div></li><li><span class="chip good">3</span><div><b>A lock on the sidebar item, so the paywall is never a surprise.</b><p class="basis"><span>Why</span>Dan Brown, principle of disclosure.</p></div></li></ol>
+    </div>
+  </div>
+</section>
+<section class="pair" id="library">
+  <header class="phead"><span class="pnum">10</span><div><span class="stage">Clueprints</span><h2>Clueprints</h2><p class="gist">&quot;Reusable video templates&quot; collides with the editor&#x27;s Templates, and the coined name is never explained.</p></div></header>
+  <div class="cols">
+    <div class="col before">
+      <div class="label"><span class="dot bad"></span>Clueso today</div>
+      <a class="shot" href="img/before-23-clueprints.jpg" target="_blank" rel="noopener"><img src="img/before-23-clueprints.jpg" alt="Clueso: Clueprints, issues highlighted" loading="lazy"></a>
+      <ol class="items"><li><span class="chip major">1</span><div><b>&quot;Reusable video templates&quot;, while the editor also has Templates</b> <span class="sev major">Major</span><p>Clueprints are full-video styles; editor Templates are intro and outro clips; Components are reusable groups. The help center needs a callout box to explain the difference.</p><p class="basis"><span>Basis</span>Match with the real world</p></div></li><li><span class="chip minor">2</span><div><b>The docs describe three tabs; the app shows two</b> <span class="sev minor">Minor</span><p>Personal, Workspace and Community in the help center; Workspace and Community in the app.</p><p class="basis"><span>Basis</span>Help and documentation</p></div></li></ol>
+    </div>
+    <div class="col after">
+      <div class="label"><span class="dot ok"></span>Redesign</div>
+      <a class="shot" href="img/after-library.jpg" target="_blank" rel="noopener"><img src="img/after-library.jpg" alt="Redesign: Clueprints, decisions highlighted" loading="lazy"></a>
+      <ol class="items"><li><span class="chip good">1</span><div><b>Clueso&#x27;s Community and Workspace tabs, search and New Clueprint stay, with nothing locked that Clueso leaves open.</b><p class="basis"><span>Why</span>Consistency with the product (Jakob&#x27;s law). Clueso: New clueprint is available on Free.</p></div></li><li><span class="chip good">2</span><div><b>The subtitle explains the coined name: a Clueprint sets the look, pacing, voice and structure of a whole video.</b><p class="basis"><span>Why</span>NN/g information scent: explain a coined name once, inline, instead of a label that collides with Templates.</p></div></li></ol>
+    </div>
+  </div>
+</section>
+<section class="pair" id="integrations">
+  <header class="phead"><span class="pnum">11</span><div><span class="stage">Integrations</span><h2>MCP and connections</h2><p class="gist">MCP takes a top-level nav slot while GitHub and Bitbucket hide in Settings.</p></div></header>
+  <div class="cols">
+    <div class="col before">
+      <div class="label"><span class="dot bad"></span>Clueso today</div>
+      <a class="shot" href="img/before-22-mcp.jpg" target="_blank" rel="noopener"><img src="img/before-22-mcp.jpg" alt="Clueso: MCP and connections, issues highlighted" loading="lazy"></a>
+      <ol class="items"><li><span class="chip minor">1</span><div><b>&quot;Watch the setup (1 min)&quot; is a 2:15 video</b> <span class="sev minor">Minor</span><p>The label and the video length disagree.</p><p class="basis"><span>Basis</span>Consistency</p></div></li><li><span class="chip minor">2</span><div><b>A developer integration at the top level</b> <span class="sev minor">Minor</span><p>MCP is in the main nav while the GitHub and Bitbucket connections live in Settings &gt; Connections.</p><p class="basis"><span>Basis</span>Grouping by user task</p></div></li></ol>
+    </div>
+    <div class="col after">
+      <div class="label"><span class="dot ok"></span>Redesign</div>
+      <a class="shot" href="img/after-integrations.jpg" target="_blank" rel="noopener"><img src="img/after-integrations.jpg" alt="Redesign: MCP and connections, decisions highlighted" loading="lazy"></a>
+      <ol class="items"><li><span class="chip good">1</span><div><b>Everything you connect once (Chrome extension, MCP, code connections) is on one page, each saying which plan includes it.</b><p class="basis"><span>Why</span>Gestalt proximity and Dan Brown&#x27;s objects: set-once tools belong together.</p></div></li><li><span class="chip good">2</span><div><b>Integrations moves to the bottom of the sidebar, next to Settings.</b><p class="basis"><span>Why</span>Microsoft settings guidance: rarely changed items go last. Serial position effect: keep the ends for what matters.</p></div></li></ol>
+    </div>
+  </div>
+</section>
+<section class="pair" id="plan">
+  <header class="phead"><span class="pnum">12</span><div><span class="stage">Settings</span><h2>Plan, usage and credits</h2><p class="gist">Credits are shown with no explanation of what costs them, in a team table built for one person.</p></div></header>
+  <div class="cols">
+    <div class="col before">
+      <div class="label"><span class="dot bad"></span>Clueso today</div>
+      <a class="shot" href="img/before-30-ai-credits.jpg" target="_blank" rel="noopener"><img src="img/before-30-ai-credits.jpg" alt="Clueso: Plan, usage and credits, issues highlighted" loading="lazy"></a>
+      <ol class="items"><li><span class="chip major">1</span><div><b>No explanation of what costs credits</b> <span class="sev major">Major</span><p>Prompts, edits and model choice all cost different amounts, and none of that is shown here.</p><p class="basis"><span>Basis</span>Help and documentation</p></div></li><li><span class="chip minor">2</span><div><b>Team table with sorting and pagination for one person</b> <span class="sev minor">Minor</span><p>Enterprise UI shown to a solo user.</p><p class="basis"><span>Basis</span>Minimalism</p></div></li></ol>
+    </div>
+    <div class="col after">
+      <div class="label"><span class="dot ok"></span>Redesign</div>
+      <a class="shot" href="img/after-plan.jpg" target="_blank" rel="noopener"><img src="img/after-plan.jpg" alt="Redesign: Plan, usage and credits, decisions highlighted" loading="lazy"></a>
+      <ol class="items"><li><span class="chip good">1</span><div><b>Three meters that match the Free plan exactly: export minutes, article exports, AI credits.</b><p class="basis"><span>Why</span>Consistency (Nielsen #4): Clueso&#x27;s pricing table says 10 minutes, 10 articles and 1,000 credits.</p></div></li><li><span class="chip good">2</span><div><b>What credits go on, using only Clueso&#x27;s own numbers.</b><p class="basis"><span>Why</span>Help and documentation (Nielsen #10). Observed: 250 credits for a 57-second video, 13 for one question.</p></div></li><li><span class="chip good">3</span><div><b>How export minutes count, in one sentence, next to See plans.</b><p class="basis"><span>Why</span>Visibility of system status (Nielsen #1).</p></div></li></ol>
+    </div>
+  </div>
+</section>
+<section class="pair" id="share">
+  <header class="phead"><span class="pnum">13</span><div><span class="stage">Share</span><h2>Sharing a video</h2><p class="gist">Share opens on Export and says nothing about the 10 free minutes, the watermark or the 1080p cap.</p></div></header>
+  <div class="cols">
+    <div class="col before">
+      <div class="label"><span class="dot bad"></span>Clueso today</div>
+      <a class="shot" href="img/before-57-share-export.jpg" target="_blank" rel="noopener"><img src="img/before-57-share-export.jpg" alt="Clueso: Sharing a video, issues highlighted" loading="lazy"></a>
+      <ol class="items"><li><span class="chip major">1</span><div><b>No limits shown before export</b> <span class="sev major">Major</span><p>Nothing mentions the 10 export minutes a month, the watermark or the 1080p cap.</p><p class="basis"><span>Basis</span>Visibility of system status</p></div></li><li><span class="chip minor">2</span><div><b>Share opens on Export</b> <span class="sev minor">Minor</span><p>Most people who click Share want a link.</p><p class="basis"><span>Basis</span>Match with user expectations</p></div></li></ol>
+    </div>
+    <div class="col after">
+      <div class="label"><span class="dot ok"></span>Redesign</div>
+      <a class="shot" href="img/after-share.jpg" target="_blank" rel="noopener"><img src="img/after-share.jpg" alt="Redesign: Sharing a video, decisions highlighted" loading="lazy"></a>
+      <ol class="items"><li><span class="chip good">1</span><div><b>Share opens on a view-only link, which is what most people want.</b><p class="basis"><span>Why</span>Jakob&#x27;s law: Share means a link in the tools people already use.</p></div></li><li><span class="chip good">2</span><div><b>The cost is stated before you commit: about 1 of your 10 free export minutes, with a watermark on Free.</b><p class="basis"><span>Why</span>Visibility of system status (Nielsen #1). Activation happens at this step, so hesitation here costs the most.</p></div></li><li><span class="chip good">3</span><div><b>Higher resolutions show their plan instead of failing later.</b><p class="basis"><span>Why</span>Error prevention (Nielsen #5).</p></div></li></ol>
+    </div>
+  </div>
+</section>
+<section class="pair" id="invite">
+  <header class="phead"><span class="pnum">14</span><div><span class="stage">Team</span><h2>Inviting a teammate</h2><p class="gist">An email field, a role dropdown and Send, with nothing about seat limits or what roles mean.</p></div></header>
+  <div class="cols">
+    <div class="col before">
+      <div class="label"><span class="dot bad"></span>Clueso today</div>
+      <a class="shot" href="img/before-88-invite-modal.jpg" target="_blank" rel="noopener"><img src="img/before-88-invite-modal.jpg" alt="Clueso: Inviting a teammate, issues highlighted" loading="lazy"></a>
+      <ol class="items"><li><span class="chip major">1</span><div><b>Invite dialog hides seat limits and role meaning</b> <span class="sev major">Major</span><p>An email field, an Editor dropdown and Send invite. Nothing says Free has 1 seat or explains Editor vs Reviewer.</p><p class="basis"><span>Basis</span>Visibility of system status</p></div></li></ol>
+    </div>
+    <div class="col after">
+      <div class="label"><span class="dot ok"></span>Redesign</div>
+      <a class="shot" href="img/after-invite.jpg" target="_blank" rel="noopener"><img src="img/after-invite.jpg" alt="Redesign: Inviting a teammate, decisions highlighted" loading="lazy"></a>
+      <ol class="items"><li><span class="chip good">1</span><div><b>The subtitle states the limit: Free includes 1 editor, you.</b><p class="basis"><span>Why</span>Visibility of system status (Nielsen #1).</p></div></li><li><span class="chip good">2</span><div><b>Seats and roles per plan in one sentence: Business adds 2 editors and roles; reviewer seats are Enterprise.</b><p class="basis"><span>Why</span>Clueso pricing table. Help users recognize, not guess (Nielsen #6).</p></div></li><li><span class="chip good">3</span><div><b>&quot;Share a link instead&quot; meets the real need (feedback) without a seat.</b><p class="basis"><span>Why</span>Jobs to be done: the job is feedback, not membership.</p></div></li></ol>
+    </div>
+  </div>
+</section>
+<section class="pair" id="translate">
+  <header class="phead"><span class="pnum">15</span><div><span class="stage">Translate</span><h2>Translating a video</h2><p class="gist">&quot;Customize translation rules&quot; jumps to Settings and throws away the setup.</p></div></header>
+  <div class="cols">
+    <div class="col before">
+      <div class="label"><span class="dot bad"></span>Clueso today</div>
+      <a class="shot" href="img/before-83-translate-rules-jump.jpg" target="_blank" rel="noopener"><img src="img/before-83-translate-rules-jump.jpg" alt="Clueso: Translating a video, issues highlighted" loading="lazy"></a>
+      <ol class="items"><li><span class="chip major">1</span><div><b>&quot;Customize translation rules&quot; throws away the translator setup</b> <span class="sev major">Major</span><p>It navigates to Settings &gt; Translations; going back shows Home with the dialog closed and the selection lost.</p><p class="basis"><span>Basis</span>User control and freedom</p></div></li></ol>
+    </div>
+    <div class="col after">
+      <div class="label"><span class="dot ok"></span>Redesign</div>
+      <a class="shot" href="img/after-translate.jpg" target="_blank" rel="noopener"><img src="img/after-translate.jpg" alt="Redesign: Translating a video, decisions highlighted" loading="lazy"></a>
+      <ol class="items"><li><span class="chip good">1</span><div><b>Translation rules open inside the dialog, beside the setup, and save to Settings for every translation. Nothing is lost.</b><p class="basis"><span>Why</span>User control and freedom (Nielsen #3).</p></div></li><li><span class="chip good">2</span><div><b>One line says how translations count against export minutes.</b><p class="basis"><span>Why</span>Visibility of system status (Nielsen #1).</p></div></li><li><span class="chip good">3</span><div><b>Upload a video or pick one of your projects, as Clueso&#x27;s Translator allows.</b><p class="basis"><span>Why</span>Consistency with Clueso: its Translator takes either.</p></div></li></ol>
+    </div>
+  </div>
+</section>
+<section class="pair" id="search">
+  <header class="phead"><span class="pnum">16</span><div><span class="stage">Search</span><h2>Search results</h2><p class="gist">Search pads every query with projects that don&#x27;t match, and never says &quot;no results&quot;.</p></div></header>
+  <div class="cols">
+    <div class="col before">
+      <div class="label"><span class="dot bad"></span>Clueso today</div>
+      <a class="shot" href="img/before-89-search-padded.jpg" target="_blank" rel="noopener"><img src="img/before-89-search-padded.jpg" alt="Clueso: Search results, issues highlighted" loading="lazy"></a>
+      <ol class="items"><li><span class="chip major">1</span><div><b>Search pads results and never says &quot;no results&quot;</b> <span class="sev major">Major</span><p>Searching &quot;on&quot; lists &quot;Untitled (1)&quot; and &quot;Taskly — Product Teaser&quot; (1) with nothing highlighted; &quot;xyzq&quot; still returns 5 projects and &quot;brand&quot; returns Home. Navigation (2) is always listed first, even when a project is the better match. The empty panel is blank (screenshot 90). The frame itself is good: fixed 680 × 480, input pinned, scopes with p; f; n; a; prefixes, Tab to ask AI.</p><p class="basis"><span>Basis</span>Nielsen #6 recognition over recall; NN/g search results and no-results pages; Hick&#x27;s law</p></div></li></ol>
+    </div>
+    <div class="col after">
+      <div class="label"><span class="dot ok"></span>Redesign</div>
+      <a class="shot" href="img/after-search.jpg" target="_blank" rel="noopener"><img src="img/after-search.jpg" alt="Redesign: Search results, decisions highlighted" loading="lazy"></a>
+      <ol class="items"><li><span class="chip good">1</span><div><b>The same query, &quot;on&quot;, lists only real matches, ranked, with the match bolded and at most 5 per group.</b><p class="basis"><span>Why</span>NN/g search results: relevance first, highlight the query. Hick&#x27;s law caps each group.</p></div></li><li><span class="chip good">2</span><div><b>Scopes are visible tabs with result counts, so you can see where matches are before you click.</b><p class="basis"><span>Why</span>Visibility of options; recognition over recall (Nielsen #6).</p></div></li><li><span class="chip good">3</span><div><b>Clueso&#x27;s fixed 680 × 480 frame is kept: the input stays pinned while results scroll.</b><p class="basis"><span>Why</span>Consistency and stability: the panel never resizes while you type.</p></div></li><li><span class="chip good">4</span><div><b>Every keyboard hint in the footer works, and Clueso&#x27;s p; n; a; prefixes still narrow the search.</b><p class="basis"><span>Why</span>Flexibility and efficiency of use (Nielsen #7). WAI-ARIA combobox pattern.</p></div></li></ol>
+    </div>
+  </div>
+</section>
+<section class="pair" id="search-empty">
+  <header class="phead"><span class="pnum">17</span><div><span class="stage">Search</span><h2>Search before you type</h2><p class="gist">The panel is blank until you type.</p></div></header>
+  <div class="cols">
+    <div class="col before">
+      <div class="label"><span class="dot bad"></span>Clueso today</div>
+      <a class="shot" href="img/before-90-search-empty.jpg" target="_blank" rel="noopener"><img src="img/before-90-search-empty.jpg" alt="Clueso: Search before you type, issues highlighted" loading="lazy"></a>
+      <ol class="items"><li><span class="chip major">1</span><div><b>The empty panel is blank</b> <span class="sev major">Major</span><p>Opening search shows only the input and the footer. Nothing suggests what you can find or do.</p><p class="basis"><span>Basis</span>Recognition rather than recall</p></div></li></ol>
+    </div>
+    <div class="col after">
+      <div class="label"><span class="dot ok"></span>Redesign</div>
+      <a class="shot" href="img/after-search-empty.jpg" target="_blank" rel="noopener"><img src="img/after-search-empty.jpg" alt="Redesign: Search before you type, decisions highlighted" loading="lazy"></a>
+      <ol class="items"><li><span class="chip good">1</span><div><b>Three recent projects and four quick actions fill the panel before you type.</b><p class="basis"><span>Why</span>Recognition over recall (Nielsen #6): most searches are for something you just worked on.</p></div></li></ol>
+    </div>
+  </div>
+</section>
+<section class="pair" id="sidebar">
+  <header class="phead"><span class="pnum">18</span><div><span class="stage">Navigation</span><h2>Collapsed sidebar</h2><p class="gist">Collapsed, the sidebar is a rail of similar icons with no labels.</p></div></header>
+  <div class="cols">
+    <div class="col before">
+      <div class="label"><span class="dot bad"></span>Clueso today</div>
+      <a class="shot" href="img/before-86-sidebar-collapsed.jpg" target="_blank" rel="noopener"><img src="img/before-86-sidebar-collapsed.jpg" alt="Clueso: Collapsed sidebar, issues highlighted" loading="lazy"></a>
+      <ol class="items"><li><span class="chip major">1</span><div><b>The collapsed sidebar is an unlabeled icon rail</b> <span class="sev major">Major</span><p>Agent, Chats and Clueso AI use similar sparkle and pointer icons, and MCP&#x27;s icon is unrecognizable. NN/g advises keeping text labels on vertical nav.</p><p class="basis"><span>Basis</span>NN/g vertical navigation</p></div></li></ol>
+    </div>
+    <div class="col after">
+      <div class="label"><span class="dot ok"></span>Redesign</div>
+      <a class="shot" href="img/after-sidebar.jpg" target="_blank" rel="noopener"><img src="img/after-sidebar.jpg" alt="Redesign: Collapsed sidebar, decisions highlighted" loading="lazy"></a>
+      <ol class="items"><li><span class="chip good">1</span><div><b>Six distinct icons for six areas: Home, Projects, Clueso AI, Clueprints, Brand kit, Analytics.</b><p class="basis"><span>Why</span>Recognition over recall. Agent and Chats are one item and MCP moved into Integrations, so no two icons mean nearly the same thing.</p></div></li><li><span class="chip good">2</span><div><b>Every icon shows its name on hover.</b><p class="basis"><span>Why</span>NN/g vertical navigation: icons need text labels.</p></div></li></ol>
+    </div>
+  </div>
+</section>
+  <section class="principles" id="principles">
+    <span class="eyebrow">Reference</span>
+    <h2>Principles and laws cited</h2>
+    <p class="gist">What each "Basis" and "Why" line refers to.</p>
+    <dl><dt>Nielsen&#x27;s 10 usability heuristics</dt><dd>Ten rules of thumb for interface design, from Jakob Nielsen (NN/g). Cited here by number: #1 visibility of system status, #2 match with the real world, #3 user control and freedom, #4 consistency, #5 error prevention, #6 recognition rather than recall, #7 flexibility and efficiency, #8 aesthetic and minimalist design, #10 help and documentation.</dd><dt>Hick&#x27;s law</dt><dd>Decision time grows with the number and complexity of choices. Used to cap options at a decision point.</dd><dt>Fogg behavior model</dt><dd>Behavior happens when motivation, ability and a prompt meet. New users are most motivated right after sign-up, so that is when the first step must be easiest.</dd><dt>Goal-gradient effect and endowed progress</dt><dd>People speed up as they near a goal, and are more likely to finish when given a head start (Nunes and Drèze, 2006).</dd><dt>Peak-end rule</dt><dd>People judge an experience by its most intense moment and its end. The finished video is the peak, so it gets the stage.</dd><dt>Jakob&#x27;s law</dt><dd>Users spend most of their time on other products and expect yours to work the same way.</dd><dt>Progressive disclosure</dt><dd>Show what most people need; reveal advanced options on request (NN/g).</dd><dt>Cognitive load</dt><dd>Every element on screen costs attention. Remove what doesn&#x27;t support the current task.</dd><dt>Microsoft HAX guidelines</dt><dd>18 guidelines for human-AI interaction. G1: make clear what the system can do. G2: make clear how well it can do it. G4: show contextually relevant information.</dd><dt>Shape of AI and Nielsen&#x27;s &quot;Slow AI&quot;</dt><dd>Patterns for AI products: show cost before an action, and show progress, stage and an estimate during long AI work.</dd><dt>Google PAIR</dt><dd>People + AI guidebook. Mental models: set expectations about what the AI does before it does it.</dd><dt>Dan Brown&#x27;s 8 principles of information architecture</dt><dd>Objects, choices, disclosure, exemplars, front doors, multiple classification, focused navigation, growth. Cited where content is grouped or found.</dd><dt>WCAG 2.2</dt><dd>Web accessibility guidelines. 1.3.1: structure conveyed in code (labels tied to inputs). 2.4.3: a logical focus order.</dd></dl>
+  </section>
+  <p class="foot">The redesign is a prototype that reuses Clueso's icons, typeface substitute and measured design tokens so the comparison is like for like. It is a concept for discussion, not Clueso's product. Pink in the prototype is deepened from Clueso's so white text passes WCAG AA contrast.</p>
+</div>

@@ -1,0 +1,195 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Alex Tries Clueso</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+/* A plain review deck: screenshot on the left with numbered boxes, the issue on the right. One typeface, two signal colours. */
+:root { --bg: #fff; --ink: #141414; --muted: #5f5f5f; --line: #e4e4e4; --issue: #c8341f; --fix: #17803d; --font: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #131313; --ink: #ededed; --muted: #a2a2a2; --line: #2b2b2b; --issue: #ff6a55; --fix: #45c37a; color-scheme: dark; } }
+:root[data-theme="dark"] { --bg: #131313; --ink: #ededed; --muted: #a2a2a2; --line: #2b2b2b; --issue: #ff6a55; --fix: #45c37a; color-scheme: dark; }
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 var(--font); -webkit-font-smoothing: antialiased; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.deck { height: 100%; max-width: 1360px; margin: 0 auto; padding-inline: 40px; display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: 64px minmax(0, 1fr) 72px; }
+header, footer { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+header { border-bottom: 1px solid var(--line); font-size: 14px; }
+header b { font-weight: 600; }
+.count { color: var(--muted); font-variant-numeric: tabular-nums; }
+footer { border-top: 1px solid var(--line); }
+.nav { display: flex; gap: 8px; }
+.nav button { height: 40px; padding: 0 16px; border: 1px solid var(--line); border-radius: 6px; font-size: 14px; font-weight: 500; }
+.nav button:hover:not(:disabled) { border-color: var(--ink); }
+.nav button:disabled { color: var(--muted); opacity: .5; cursor: default; }
+.hint { font-size: 13px; color: var(--muted); }
+.hint kbd { font: inherit; padding: 1px 6px; border: 1px solid var(--line); border-radius: 4px; }
+main { min-height: 0; padding-block: 24px; overflow-y: auto; }
+
+.slide { height: 100%; display: grid; grid-template-columns: minmax(0, 1fr) 400px; gap: 48px; align-items: center; }
+.shot { position: relative; margin: 0; align-self: center; justify-self: center; max-width: 100%; aspect-ratio: var(--ar); width: min(100%, calc((100vh - 64px - 72px - 48px) * var(--ar))); }
+.shot img { display: block; width: 100%; height: 100%; border: 1px solid var(--line); border-radius: 4px; }
+.bx { position: absolute; border: 2px solid var(--c); border-radius: 3px; pointer-events: none; }
+.bx span { position: absolute; left: -2px; top: -22px; min-width: 20px; height: 20px; padding: 0 5px; display: grid; place-items: center; background: var(--c); color: #fff; font-size: 12px; font-weight: 600; border-radius: 3px 3px 3px 0; }
+.issue { --c: var(--issue); } .fix { --c: var(--fix); }
+.text { display: grid; gap: 14px; align-content: center; }
+.label { font-size: 14px; font-weight: 600; color: var(--c); }
+h1, h2 { margin: 0; font-weight: 600; letter-spacing: -0.015em; text-wrap: balance; }
+h2 { font-size: 28px; line-height: 1.15; }
+ol.pts { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+ol.pts li { display: grid; grid-template-columns: 24px 1fr; gap: 12px; align-items: start; }
+ol.pts .n { width: 20px; height: 20px; margin-top: 2px; display: grid; place-items: center; font-size: 12px; font-weight: 600; color: #fff; background: var(--c); border-radius: 3px; }
+ol.pts .n.none { background: none; color: var(--muted); border: 1px solid var(--line); }
+.want { font-size: 14px; color: var(--muted); }
+.want b { color: var(--ink); font-weight: 500; }
+blockquote { margin: 0; padding-left: 16px; border-left: 2px solid var(--c); font-size: 17px; line-height: 1.45; }
+blockquote::before { content: "Alex: "; font-weight: 600; }
+.tally { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.pr, .cost { border-top: 1px solid var(--line); padding-top: 14px; display: grid; gap: 4px; font-size: 15px; }
+.pr small, .cost small { font-size: 13px; color: var(--muted); }
+.pr p, .cost p { margin: 0; color: var(--muted); }
+.pr b, .cost b { font-weight: 600; color: var(--ink); }
+.cost .m { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; }
+.imp { font-size: 13px; font-weight: 600; }
+.imp.High { color: var(--issue); } .imp.Medium { color: var(--ink); } .imp.Low { color: var(--muted); font-weight: 500; }
+.cost .chk { font-size: 13px; }
+
+.page { max-width: 880px; display: grid; gap: 20px; align-content: center; min-height: 100%; }
+.page h1 { font-size: clamp(36px, 5vw, 56px); line-height: 1.05; }
+.page p { margin: 0; color: var(--muted); max-width: 62ch; font-size: 18px; }
+.note p { color: var(--ink); font-size: 17px; }
+.me { display: flex; align-items: center; gap: 20px; }
+.me img { width: 88px; height: 88px; flex: none; border-radius: 50%; object-fit: cover; border: 1px solid var(--line); }
+.me > div { display: grid; gap: 6px; min-width: 0; }
+@media (max-width: 900px) { .me { gap: 14px; } .me img { width: 64px; height: 64px; } }
+.about h1 { font-size: clamp(30px, 3.6vw, 40px); }
+.about .eyebrow { font-size: 14px; font-weight: 600; color: var(--issue); }
+.about ul { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px 28px; }
+.about li span { font-size: 15px; } .about li small:last-child { margin-top: 6px; }
+.about li { display: grid; gap: 2px; align-content: start; padding-top: 12px; border-top: 2px solid var(--line); }
+.about li b { font-weight: 600; } .about li span { color: var(--muted); } .about li small { font-size: 13px; color: var(--muted); }
+.links { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 15px; color: var(--muted); }
+.links a { color: var(--ink); text-underline-offset: 3px; } .note p.sm { color: var(--muted); font-size: 15px; }
+td.num { color: var(--muted); font-weight: 500; width: 28px; font-variant-numeric: tabular-nums; }
+.who { display: grid; grid-template-columns: 96px 1fr; gap: 10px 16px; margin: 0; font-size: 17px; max-width: 640px; }
+.who dt { color: var(--muted); } .who dd { margin: 0; }
+.split { display: flex; flex-wrap: wrap; gap: 32px; font-size: 15px; }
+.split div { display: grid; gap: 2px; } .split b { font-size: 28px; font-weight: 600; } .split .i b { color: var(--issue); }
+.chart svg { width: 100%; height: auto; display: block; }
+.legend { display: flex; flex-wrap: wrap; gap: 24px; font-size: 14px; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 8px; }
+.legend i { width: 20px; height: 0; border-top: 2px solid var(--c); } .legend .b i { border-top-style: dashed; }
+table { width: 100%; border-collapse: collapse; font-size: 15px; }
+th, td { text-align: left; padding: 9px 16px 9px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 13px; font-weight: 500; color: var(--muted); }
+.cheat td:first-child { font-weight: 600; white-space: nowrap; }
+td:last-child { color: var(--muted); font-size: 14px; white-space: nowrap; }
+.sum td:last-child { font-size: 13px; }
+.tw { overflow-x: auto; }
+
+@media (min-width: 901px) and (max-height: 880px) {
+  .slide { grid-template-columns: minmax(0, 1fr) 440px; gap: 40px; }
+  h2 { font-size: 23px; } blockquote { font-size: 15px; } ol.pts { font-size: 14px; gap: 6px; } .text { gap: 10px; }
+  .pr, .cost { font-size: 14px; padding-top: 10px; gap: 2px; } .want, .label { font-size: 13px; }
+  th, td { padding: 6px 16px 6px 0; font-size: 14px; } .page { gap: 16px; } .page h2 { font-size: 26px; }
+}
+@media (max-width: 900px) {
+  .deck { height: auto; min-height: 100%; padding-inline: 16px; grid-template-rows: 56px auto 64px; }
+  main { overflow: visible; padding-block: 24px; }
+  .slide { grid-template-columns: 1fr; gap: 24px; height: auto; }
+  .shot { width: 100%; }
+  h2 { font-size: 24px; }
+  footer { position: sticky; bottom: 0; background: var(--bg); padding-bottom: env(safe-area-inset-bottom, 0px); }
+  .hint { display: none; }
+  .page { min-height: 0; }
+  td:last-child { white-space: normal; }
+}
+</style>
+<div class="deck">
+  <header><b>Alex tries Clueso</b><span class="count" id="count"></span></header>
+  <main id="main" aria-live="polite"></main>
+  <footer><span class="hint">Use <kbd>←</kbd> <kbd>→</kbd> to move</span><div class="nav"><button id="prev">← Previous</button><button id="next">Next →</button></div></footer>
+</div>
+<script>
+const DATA = {"slides": [{"kind": "issue", "img": "02-signup-personal-email.jpg", "title": "Sign-up nags about work email", "points": [["A warning appears while typing and pushes the password field down.", [266, 414, 512, 432]], ["The same message returns as a toast on every onboarding step.", null]], "principle": ["Reactance", "Repeating a nudge after someone has decided reads as pressure."], "w": 800, "h": 600, "file": "img/b-02-signup-personal-email.jpg", "n": 1, "want": "Sign up and get to the product.", "thought": "I typed my Gmail and the form jumped while I was typing. It wants a work email? I'm just trying it.", "screens": 1, "credits": 0, "impact": "Medium", "metric": "Sign-up conversion", "cost": "Questioning a choice at the very first form gives people a reason to stop, and the toast keeps the doubt alive through onboarding.", "check": "Sign-up completion for personal vs work email."}, {"kind": "issue", "img": "04-complete-profile.jpg", "title": "Asks for a name Google already gave", "points": [["First and last name are empty after signing in with Google.", [118, 282, 338, 322]], ["The name is asked again two screens later.", null]], "principle": ["Cognitive load", "Every field the product could fill itself is effort spent before any value."], "w": 800, "h": 511, "file": "img/b-04-complete-profile.jpg", "n": 2, "want": "Get past sign-up. I used Google to save time.", "thought": "Google already gave you my name. Why am I typing it again?", "screens": 2, "credits": 0, "impact": "Low", "metric": "Onboarding completion", "cost": "One more field before any value. Small alone, but it adds up with the steps after it.", "check": "Time spent on the profile step."}, {"kind": "issue", "img": "06-loading-logo.jpg", "title": "About 20 seconds of a blank screen", "points": [["Only a faint logo while onboarding loads. No progress, no message, no estimate.", [362, 230, 438, 304]]], "principle": ["Doherty threshold", "Without a response or visible progress, people assume it's broken."], "w": 800, "h": 533, "file": "img/b-06-loading-logo.jpg", "n": 3, "want": "Start using it.", "thought": "Is it loading or broken? I almost refreshed.", "screens": 3, "credits": 0, "impact": "High", "metric": "Onboarding completion", "cost": "A blank screen during the first visit reads as broken. People who refresh or leave here never see the product.", "check": "Sessions that reload or end on the loading screen."}, {"kind": "issue", "img": "07-onb-goals.jpg", "title": "40% of onboarding is decoration", "points": [["The work-email toast again.", [355, 13, 652, 38]], ["A decorative panel takes the right side and carries no information.", [480, 47, 790, 523]]], "principle": ["Banner blindness", "Areas that look like decoration teach people to stop looking there."], "w": 800, "h": 533, "file": "img/b-07-onb-goals.jpg", "n": 4, "want": "Answer a quick question and move on.", "thought": "Half the screen is a picture, and the work-email nag is back.", "screens": 4, "credits": 0, "impact": "Low", "metric": "Onboarding completion", "cost": "Not a blocker by itself. It makes setup feel longer than it is.", "check": "Drop-off per onboarding step."}, {"kind": "issue", "img": "09-onb-profile.jpg", "title": "Thirteen roles, and none change anything", "points": [["Name asked for the second time.", [86, 194, 394, 226]], ["13 roles in no clear order. The answer doesn't change what you see next.", [86, 238, 394, 267]]], "principle": ["Hick's law", "More options make decisions slower, and effort that changes nothing feels wasted."], "w": 800, "h": 533, "file": "img/b-09-onb-profile.jpg", "n": 5, "want": "Finish setup.", "thought": "My name again. Thirteen roles, and I'm not sure any of them is me.", "screens": 5, "credits": 0, "impact": "Medium", "metric": "Activation, data quality", "cost": "Answers that change nothing get picked at random, so the role data used for segmentation can't be trusted.", "check": "Share of users on the first role in the list."}, {"kind": "issue", "img": "15-onb-extension-gate.jpg", "title": "The recommended path ends in an install wall", "points": [["\"Record screen, recommended\" asks you to install an extension and come back.", [240, 170, 560, 363]]], "principle": ["Fogg behavior model", "Motivation peaks right after sign-up, so the first step must be the easiest, not the hardest."], "w": 800, "h": 533, "file": "img/b-15-onb-extension-gate.jpg", "n": 6, "want": "Make my first video.", "thought": "I clicked the recommended option and it wants me to install something and come back. Five screens in.", "screens": 6, "credits": 0, "impact": "High", "metric": "Activation", "cost": "The recommended first step sends people out of the product before any value. Anyone who doesn't come back after installing is lost.", "check": "Record screen picked → first recording in the same session."}, {"kind": "issue", "img": "18-home-checklist-survey.jpg", "title": "Six things compete with the prompt on Home", "points": [["Sale banner.", [0, 0, 800, 26]], ["\"How did you hear about us?\" survey, seconds after arriving.", [636, 252, 792, 475]], ["Checklist collapsed in the sidebar.", [6, 286, 118, 421]], ["One plan, three names: Free trial, free plan, Free.", [6, 503, 118, 528]], ["Model picker on the prompt.", [347, 264, 411, 282]], ["Brand kit switched on by default.", [413, 264, 481, 282]]], "principle": ["Cognitive load", "Attention is limited. Everything on screen competes with the one task that matters."], "w": 800, "h": 533, "file": "img/b-18-home-checklist-survey.jpg", "n": 7, "want": "Describe my demo and get started.", "thought": "A banner, a survey, a checklist, a model picker. Where do I actually start?", "screens": 7, "credits": 0, "impact": "Medium", "metric": "Activation", "cost": "Every extra element delays the first prompt, the moment that matters most on Home.", "check": "Time from first Home visit to first prompt."}, {"kind": "issue", "img": "18-home-checklist-survey.jpg", "title": "A brand kit nobody set up, on by default", "points": [["For a Gmail sign-up, Clueso built a kit from gmail.com: a placeholder pink logo.", [413, 264, 481, 282]], ["The AI then added \"Use our brand kit\" to the prompt.", null]], "principle": ["Default bias", "Most people keep the default, so a wrong default quietly ships a wrong result."], "w": 800, "h": 533, "file": "img/b-18-home-checklist-survey.jpg", "n": 8, "want": "Use my own product's look, later.", "thought": "I never set up a brand. Why is it pink, and why did it add a line to my brief?", "screens": 7, "credits": 0, "impact": "Medium", "metric": "Activation, retention", "cost": "The first video carries a placeholder logo. The first output is what people judge the product by.", "check": "First videos made with an auto-built brand kit."}, {"kind": "issue", "img": "46-model-picker.jpg", "title": "A model menu with no costs", "points": [["Six vendor models, described by vendor. None shows a price; the default is the most expensive.", [346, 286, 514, 470]]], "principle": ["Feedforward", "Show what an action will cost before people take it, not after."], "w": 800, "h": 533, "file": "img/b-46-model-picker.jpg", "n": 9, "want": "Pick whatever's sensible and go.", "thought": "Opus, Sonnet, Astra? I don't know what these cost, and I'm on a free plan.", "screens": 8, "credits": 0, "impact": "High", "metric": "Revenue, retention", "cost": "A free user can spend credits on the most expensive model without knowing, and hit the limit before seeing value.", "check": "Credits used before the first export, by model."}, {"kind": "issue", "img": "63-ai-video-building.jpg", "title": "A 9½-minute build with no estimate", "points": [["Only elapsed time: \"Working for 4m 54s\", then \"Thinking for 8m 14s\".", [600, 315, 786, 331]]], "principle": ["Goal-gradient effect", "People wait more patiently when they can see how close the end is."], "w": 800, "h": 533, "file": "img/b-63-ai-video-building.jpg", "n": 10, "want": "Get my video.", "thought": "Nine minutes and counting, with no idea how far along it is. Can I leave?", "screens": 9, "credits": 263, "impact": "High", "metric": "Activation", "cost": "Over nine minutes with no end in sight. Anyone who closes the tab may never see the finished video.", "check": "Builds finished with nobody returning to watch."}, {"kind": "issue", "img": "57-share-export.jpg", "title": "Limits appear only after you share", "points": [["Share opens on Export and says nothing about the 10 free minutes, the watermark or the 1080p cap.", [372, 140, 552, 396]]], "principle": ["Peak-end rule", "People remember the best moment and the last one. A surprise at the end sours both."], "w": 800, "h": 533, "file": "img/b-57-share-export.jpg", "n": 11, "want": "Send it to my team.", "thought": "The video is good. Then Share opens on Export, and nothing says it uses my free minutes or adds a watermark.", "screens": 10, "credits": 263, "impact": "High", "metric": "Paid conversion, trust", "cost": "Limits at the payoff moment can push an upgrade, but a surprise there feels like a trap, and it's the last thing people remember.", "check": "At the limit: upgrade vs leave."}, {"kind": "issue", "img": "96-chat-page-is-agent.jpg", "title": "One assistant, five doors, four names", "points": [["The Home prompt, Clueso AI, Chats and this chat are the same assistant, called \"Director\" inside.", [146, 68, 540, 95]], ["Agent in the sidebar is something else: an Enterprise sales page.", [3, 62, 135, 158]]], "principle": ["Mental model", "If one thing has many names and doors, people build many wrong ideas of it."], "w": 800, "h": 562, "file": "img/b-96-chat-page-is-agent.jpg", "n": 12, "want": "Next day: shorten the intro.", "thought": "Home prompt, Clueso AI, Chats or Agent? I don't know which one has yesterday's video.", "screens": 11, "credits": 263, "impact": "Medium", "metric": "Retention", "cost": "On day two, Alex doesn't know where yesterday's work lives. Returning users start over or give up.", "check": "Day-2 users who reopen yesterday's video."}], "moments": ["Sign up", "Onboarding", "First value", "Home", "Build", "Share", "Next day"], "before": [3, 2, 1, 2, 2, 2, 1], "cheat": [["Hick's law", "Keep a decision to about four clear options.", "Issue 5"], ["Cognitive load", "Don't ask for what you already know. Remove what competes with the task.", "Issue 2, Issue 7"], ["Banner blindness", "Every area should inform. Decoration teaches people to look away.", "Issue 4"], ["Feedforward", "Show the cost and outcome before the click.", "Issue 9"], ["Goal-gradient effect", "Show progress toward an end, not time spent.", "Issue 10"], ["Mental model", "Same thing, same name, one place.", "Issue 12"], ["Fogg behavior model", "Make the first step the easiest one.", "Issue 6"], ["Default bias", "Defaults are decisions. Make them right for most people.", "Issue 8"], ["Reactance", "Say it once.", "Issue 1"], ["Doherty threshold", "Respond at once, or show what's happening.", "Issue 3"], ["Peak-end rule", "Protect the best moment and the last one.", "Issue 11"]], "summary": [[1, "Sign-up nags about work email", "Sign-up conversion", "Medium"], [2, "Asks for a name Google already gave", "Onboarding completion", "Low"], [3, "About 20 seconds of a blank screen", "Onboarding completion", "High"], [4, "40% of onboarding is decoration", "Onboarding completion", "Low"], [5, "Thirteen roles, and none change anything", "Activation, data quality", "Medium"], [6, "The recommended path ends in an install wall", "Activation", "High"], [7, "Six things compete with the prompt on Home", "Activation", "Medium"], [8, "A brand kit nobody set up, on by default", "Activation, retention", "Medium"], [9, "A model menu with no costs", "Revenue, retention", "High"], [10, "A 9½-minute build with no estimate", "Activation", "High"], [11, "Limits appear only after you share", "Paid conversion, trust", "High"], [12, "One assistant, five doors, four names", "Retention", "Medium"]], "issues": 12, "fixes": 0};
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const PAGES = [{ kind: "about" }, { kind: "title" }, ...DATA.slides, { kind: "chart" }, { kind: "summary" }, { kind: "cheat" }, { kind: "note" }];
+let i = 0;
+
+function slide(s) {
+  let k = 0;
+  const pts = s.points.map(([t, b]) => { if (b) k++; return { t, n: b ? k : null, b }; });
+  const boxes = pts.filter(p => p.b).map(p => `<div class="bx" style="left:${p.b[0] / s.w * 100}%;top:${p.b[1] / s.h * 100}%;width:${(p.b[2] - p.b[0]) / s.w * 100}%;height:${(p.b[3] - p.b[1]) / s.h * 100}%"><span>${p.n}</span></div>`).join("");
+  const label = `Issue ${s.n} of ${DATA.issues}`;
+  return `<div class="slide ${s.kind}"><figure class="shot" style="--ar:${s.w}/${s.h}"><img src="${s.file}" alt="${s.kind === "issue" ? "Clueso" : "Redesign"}: ${esc(s.title)}" width="${s.w}" height="${s.h}">${boxes}</figure>
+    <div class="text"><span class="label">${label}</span>
+      <span class="want"><b>Alex wants to</b> ${esc(s.want.charAt(0).toLowerCase() + s.want.slice(1))}</span>
+      <h2>${esc(s.title)}</h2>
+      <blockquote>${esc(s.thought)}</blockquote>
+      <ol class="pts">${pts.map(p => `<li><span class="n ${p.n ? "" : "none"}">${p.n || "·"}</span><span>${esc(p.t)}</span></li>`).join("")}</ol>
+      <div class="pr"><small>Why it hurts</small><p><b>${esc(s.principle[0])}.</b> ${esc(s.principle[1])}</p></div>
+      <div class="cost"><small>What it may cost</small><span class="m"><b>${esc(s.metric)}</b><span class="imp ${s.impact}">${s.impact} impact</span></span><p>${esc(s.cost)}</p><p class="chk">How to check: ${esc(s.check)}</p></div></div></div>`;
+}
+function title() {
+  return `<div class="page"><h1>Alex tries Clueso</h1>
+    <p>A new user's path from sign-up to a shared video, and back the next day. Twelve places where it gets harder than it needs to, why each one hurts, and what it may cost in sign-ups, activation, retention and revenue.</p>
+    <dl class="who"><dt>Who</dt><dd>Alex, product manager at Taskly, a small startup</dd><dt>Needs</dt><dd>A 1-minute product demo by Friday</dd><dt>Has</dt><dd>A rough screen recording, no video editor, the Free plan</dd><dt>Expects</dt><dd>Record, get a polished video, share it with the team</dd></dl>
+    <div class="split"><div class="i"><b>${DATA.issues}</b><span>issues</span></div><div class="i"><b>${DATA.summary.filter(r => r[3] === "High").length}</b><span>high impact</span></div><div><b>${DATA.slides[10].screens}</b><span>screens from sign-up to a shared video</span></div></div>
+    <p class="sm" style="font-size:15px">Recorded on web.clueso.io on 16 and 17 October 2026. Every screenshot is from that session.</p></div>`;
+}
+function chart() {
+  const W = 760, H = 300, L = 32, R = 16, T = 16, B = 40; const n = DATA.moments.length;
+  const x = j => L + j * (W - L - R) / (n - 1), y = v => T + (5 - v) * (H - T - B) / 4;
+  const path = a => a.map((v, j) => `${j ? "L" : "M"}${x(j)},${y(v)}`).join(" ");
+  const avg = a => (a.reduce((t, v) => t + v, 0) / a.length).toFixed(1);
+  const grid = [1, 2, 3, 4, 5].map(v => `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${L - 12}" y="${y(v) + 4}" text-anchor="end" font-size="12" fill="var(--muted)">${v}</text>`).join("");
+  const labels = DATA.moments.map((m, j) => `<text x="${x(j)}" y="${H - 12}" text-anchor="${j === 0 ? "start" : j === n - 1 ? "end" : "middle"}" font-size="13" fill="var(--muted)">${esc(m)}</text>`).join("");
+  const dots = (a, c) => a.map((v, j) => `<circle cx="${x(j)}" cy="${y(v)}" r="4" fill="${c}"/>`).join("");
+  return `<div class="page chart"><h2>How Alex felt at each moment</h2><p>1 is fighting the product, 5 is effortless. My reading of the session, not measured data.</p>
+    <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Scores between 1 and 3 across the seven moments, lowest at first value and the next day." font-family="Instrument Sans, system-ui, sans-serif">${grid}
+      <path d="${path(DATA.before)}" fill="none" stroke="var(--issue)" stroke-width="2"/>${dots(DATA.before, "var(--issue)")}${labels}</svg>
+    <div class="legend"><span class="issue"><i></i>Average ${avg(DATA.before)} out of 5</span></div></div>`;
+}
+function summary() {
+  return `<div class="page sum"><h2>All twelve, by what they may cost</h2><div class="tw"><table><thead><tr><th></th><th>Issue</th><th>What it may cost</th><th>Impact</th></tr></thead><tbody>${DATA.summary.map(([n, t, m, imp]) => `<tr><td class="num">${n}</td><td>${esc(t)}</td><td>${esc(m)}</td><td><span class="imp ${imp}">${imp}</span></td></tr>`).join("")}</tbody></table></div></div>`;
+}
+function about() {
+  return `<div class="page about"><div class="me"><img src="img/lokesh.jpg" alt="Lokesh Bhatia" width="88" height="88"><div><span class="eyebrow">Before you start</span>
+    <h1>Hi, I'm Lokesh, a product designer.</h1></div></div>
+    <p>I used Clueso as a new user and wrote down every place it got harder than it needed to. I've worked on the same problems before:</p>
+    <ul>
+      <li><b>Runable AI</b><small>Founding designer</small><span>AI agent platform. Plans shown before a run, long tasks that stay legible, onboarding that reached a ~$1M run-rate in month one.</span><small>Issues 9, 10, 12</small></li>
+      <li><b>Rupeezy</b><small>Product designer</small><span>Owned the trading app behind 97% of revenue. Cut KYC drop-off by putting easy steps first and showing progress.</span><small>Issues 1 to 7</small></li>
+      <li><b>Rise Portal</b><small>Rupeezy</small><span>Partner earnings in one place. Lead-to-client conversion up 2.4× in two months, tickets down 48%.</span><small>Issue 11</small></li>
+    </ul>
+    <div class="links"><a href="https://www.lokeshbhatia.com" target="_blank" rel="noopener">lokeshbhatia.com</a><a href="https://www.linkedin.com/in/lkb01" target="_blank" rel="noopener">linkedin.com/in/lkb01</a><span>hi.lokeshux@gmail.com</span><span>3 years · IIT Guwahati · Bengaluru</span></div></div>`;
+}
+function note() {
+  return `<div class="page note"><h2>How this was made</h2>
+    <p>I signed up on web.clueso.io as a new user, with Google, on the Free plan. I went from sign-up to a shared video, then came back the next day to make a change. Every screenshot is from that session; nothing is mocked up.</p>
+    <p>Alex stands in for the people you onboard every day. The words in quotes are mine, written at each step. Impact levels are my judgement. I don't have your data, so each issue names the number that would confirm or reject it.</p>
+    <p>I'd like to help fix these. I've also built a working prototype of a simpler first-video flow and would be glad to walk you through it.</p>
+    <div class="links"><a href="https://www.lokeshbhatia.com" target="_blank" rel="noopener">lokeshbhatia.com</a><span>hi.lokeshux@gmail.com</span></div></div>`;
+}
+function cheat() {
+  return `<div class="page cheat"><h2>Cheat sheet</h2><div class="tw"><table><thead><tr><th>Principle</th><th>Rule</th><th>Where</th></tr></thead><tbody>${DATA.cheat.map(([n, r, w]) => `<tr><td>${esc(n)}</td><td>${esc(r)}</td><td>${esc(w)}</td></tr>`).join("")}</tbody></table></div></div>`;
+}
+function render() {
+  const p = PAGES[i];
+  document.getElementById("main").innerHTML = p.kind === "about" ? about() : p.kind === "title" ? title() : p.kind === "chart" ? chart() : p.kind === "cheat" ? cheat() : p.kind === "summary" ? summary() : p.kind === "note" ? note() : slide(p);
+  document.getElementById("main").scrollTop = 0;
+  document.getElementById("count").textContent = `${i + 1} / ${PAGES.length}`;
+  document.getElementById("prev").disabled = i === 0;
+  document.getElementById("next").disabled = i === PAGES.length - 1;
+  try { sessionStorage.setItem("clueso-review-slide", String(i)); } catch (e) {}
+}
+const go = d => { const n = Math.max(0, Math.min(PAGES.length - 1, i + d)); if (n !== i) { i = n; render(); if (innerWidth <= 900) scrollTo(0, 0); } };
+document.getElementById("prev").onclick = () => go(-1);
+document.getElementById("next").onclick = () => go(1);
+document.addEventListener("keydown", e => { if (e.metaKey || e.ctrlKey || e.altKey) return; if (e.key === "ArrowRight") { e.preventDefault(); go(1); } else if (e.key === "ArrowLeft") { e.preventDefault(); go(-1); } });
+const h = parseInt((location.hash.match(/^#(\d+)$/) || [])[1], 10);
+if (h >= 1 && h <= PAGES.length) i = h - 1;
+else { try { const saved = parseInt(sessionStorage.getItem("clueso-review-slide"), 10); if (saved >= 0 && saved < PAGES.length) i = saved; } catch (e) {} }
+render();
+</script>
